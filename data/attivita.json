@@ -1,0 +1,52 @@
+{
+    "items": [
+        {
+            "id": "concerto-in-quota",
+            "titolo": "Concerto in quota — placeholder",
+            "data": "2026-07-12",
+            "ora": "11:00",
+            "luogo": "Baita delle Note",
+            "citta": "Val Seriana (BG)",
+            "testo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Un mattino di musica all’aperto, tra sentieri e ottoni.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            "immagine": "",
+            "immagineThumb": "",
+            "hidden": false
+        },
+        {
+            "id": "laboratorio-ottoni",
+            "titolo": "Laboratorio ottoni aperti",
+            "data": "2026-06-20",
+            "ora": "17:30",
+            "luogo": "Sala prove SolGuido",
+            "citta": "Bergamo",
+            "testo": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque.\n\nDidattica inclusiva per chi vuole avvicinarsi agli ottoni, dal primo fiato al ensemble.",
+            "immagine": "",
+            "immagineThumb": "",
+            "hidden": false
+        },
+        {
+            "id": "sera-balcanica",
+            "titolo": "Sera balcanica in piazza",
+            "data": "2026-12-14",
+            "ora": "21:00",
+            "luogo": "Piazza del Sole",
+            "citta": "Clusone (BG)",
+            "testo": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. Ritmi, danze e comunità che suonano insieme.",
+            "immagine": "",
+            "immagineThumb": "",
+            "hidden": false
+        },
+        {
+            "id": "cammino-e-ottoni",
+            "titolo": "Cammino e ottoni in Val Seriana",
+            "data": "2027-05-08",
+            "ora": "09:30",
+            "luogo": "Partenza da Clusone",
+            "citta": "Val Seriana (BG)",
+            "testo": "Placeholder: una giornata di cammino e musica condivisa tra comunità e paesaggio.",
+            "immagine": "",
+            "immagineThumb": "",
+            "hidden": false
+        }
+    ]
+}

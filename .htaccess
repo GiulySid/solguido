@@ -1,0 +1,21 @@
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{THE_REQUEST} \s/+((?:[^?\s]+/)*)index\.php[\s?] [NC]
+  RewriteRule ^index\.php$ /%1 [R=301,L]
+
+  RewriteCond %{THE_REQUEST} \s/+((?:[^?\s]+/)*)[^/\s?]+\.php[\s?] [NC]
+  RewriteCond %{REQUEST_URI} !/admin/
+  RewriteRule ^([^/]+)\.php$ /%1$1 [R=301,L]
+
+  RewriteCond %{REQUEST_FILENAME}.php -f
+  RewriteRule ^([^/]+)/?$ $1.php [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([^/]+)/?$ index.php [L]
+</IfModule>

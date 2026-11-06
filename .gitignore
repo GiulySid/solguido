@@ -1,0 +1,12 @@
+admin/credentials.php
+data/*.tmp
+data/backups/*.json
+!data/backups/.gitkeep
+media/attivita/*
+!media/attivita/thumbs/
+media/attivita/thumbs/*
+!media/attivita/thumbs/.gitkeep
+media/bacheca/*
+!media/bacheca/thumbs/
+media/bacheca/thumbs/*
+!media/bacheca/thumbs/.gitkeep

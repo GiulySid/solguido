@@ -1,0 +1,44 @@
+{
+    "posts": [
+        {
+            "id": "post-guido-welcome",
+            "autore": "Guido",
+            "testo": "Ciao a tutti, qui lo spazio è aperto: scrivete un pensiero, caricate una foto, raccontate una nota. Io rispondo così, come sempre.\n\n🌈 🎵 🎺",
+            "immagine": "",
+            "immagineThumb": "",
+            "createdAt": "2026-03-01T10:00:00+01:00",
+            "status": "approved",
+            "fromGuido": true
+        },
+        {
+            "id": "post-esempio-amico",
+            "autore": "Marco",
+            "testo": "Lorem ipsum: un posto dove la musica e la montagna si parlano. Grazie SolGuido.",
+            "immagine": "",
+            "immagineThumb": "",
+            "createdAt": "2026-03-02T18:22:00+01:00",
+            "status": "approved",
+            "fromGuido": false
+        },
+        {
+            "id": "bacheca-20261106-102614-6b6414",
+            "autore": "sid",
+            "testo": "nivksjvnsjv",
+            "immagine": "media/bacheca/msg-20261106-102614-ef5a32.jpg",
+            "immagineThumb": "media/bacheca/msg-20261106-102614-ef5a32.jpg",
+            "createdAt": "2026-11-06T10:26:14+00:00",
+            "status": "approved",
+            "fromGuido": false
+        },
+        {
+            "id": "bacheca-demo-pending",
+            "autore": "UtenteReale",
+            "testo": "Secondo test dopo fix honeypot",
+            "immagine": "",
+            "immagineThumb": "",
+            "createdAt": "2026-11-06T11:25:00+01:00",
+            "status": "pending",
+            "fromGuido": false
+        }
+    ]
+}
