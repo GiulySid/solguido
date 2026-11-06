@@ -112,7 +112,6 @@ $img = data_asset($item["immagineThumb"] ?: ($item["immagine"] ?? ""));
 ob_start();
 ?>
 <a class="admin-back" href="attivita.php">← Attività</a>
-<p class="admin-kicker">Calendario</p>
 <h1 class="admin-title"><?= $index === null ? "Nuova attività" : "Modifica attività" ?></h1>
 <?php if ($error) { ?>
   <p class="admin-flash admin-flash--error" role="alert"><?= admin_h($error) ?></p>

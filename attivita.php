@@ -39,7 +39,6 @@ $shown = $tab === "past" ? $past : $future;
 site_header("attivita", "Attività", "Eventi e iniziative SolGuido.");
 ?>
 <header class="page-head reveal">
-  <p class="kicker">Attività</p>
   <h1>Eventi, laboratori, concerti</h1>
 </header>
 
@@ -61,7 +60,7 @@ site_header("attivita", "Attività", "Eventi e iniziative SolGuido.");
     <div class="event-list">
       <?php foreach ($shown as $item) {
           $dt = date_create((string) ($item["data"] ?? ""));
-          $day = $dt ? $dt->format("j") : "—";
+          $day = $dt ? $dt->format("j") : "-";
           $month = $dt ? $dt->format("M") : "";
           ?>
         <a class="event-card reveal" href="attivita-dettaglio?id=<?= data_h($item["id"]) ?>">

@@ -32,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ob_start();
 ?>
 <a class="admin-back" href="index.php">← Contenuti</a>
-<p class="admin-kicker">Account</p>
 <h1 class="admin-title">Cambia password</h1>
 <p class="admin-lead">Lo username resta <?= admin_h($_SESSION["admin_user"] ?? "") ?>. Cambia solo la password.</p>
 <?php if ($error) { ?>

@@ -10,13 +10,11 @@ $posts = data_bacheca_posts(null);
 
 ob_start();
 ?>
-<p class="admin-kicker">SolGuido</p>
 <h1 class="admin-title">Cosa vuoi modificare?</h1>
 <p class="admin-lead">I testi stanno nei JSON, le foto in /media. Il sito pubblico le legge da lì.</p>
 <div class="admin-grid">
   <a class="admin-card" href="sito.php">
     <div>
-      <p class="admin-kicker">Sito</p>
       <h2>Testi e contatti</h2>
       <p>Chi siamo, cosa facciamo, email, social, 8×1000</p>
     </div>
@@ -24,7 +22,6 @@ ob_start();
   </a>
   <a class="admin-card" href="attivita.php">
     <div>
-      <p class="admin-kicker">Calendario</p>
       <h2>Attività</h2>
       <p>Eventi, laboratori, concerti</p>
     </div>
@@ -32,7 +29,6 @@ ob_start();
   </a>
   <a class="admin-card" href="bacheca.php">
     <div>
-      <p class="admin-kicker">Chat</p>
       <h2>Bacheca</h2>
       <p>Approva, nascondi, elimina, scrivi come Guido</p>
     </div>

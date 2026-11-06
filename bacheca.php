@@ -81,8 +81,7 @@ $wallpaper = site_asset("img/placeholders/bacheca-wallpaper.jpg");
 site_header("bacheca", "Bacheca", "Messaggi per SolGuido, come una chat con Guido.");
 ?>
 <header class="page-head reveal">
-  <p class="kicker">Bacheca</p>
-  <!-- <h1>Come una chat con Guido</h1> -->
+  <h1>Bacheca</h1>
 </header>
 
 <div class="bacheca reveal">

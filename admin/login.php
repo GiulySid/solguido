@@ -47,7 +47,6 @@ ob_start();
 ?>
 <div class="admin-auth">
   <div class="admin-auth__card">
-    <p class="admin-kicker">SolGuido</p>
     <h1 class="admin-title">Admin</h1>
     <p class="admin-lead">Area riservata per aggiornare attività, bacheca e testi del sito.</p>
     <?php if ($error) { ?>

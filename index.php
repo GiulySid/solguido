@@ -47,7 +47,6 @@ site_header("home", $name, $site["tagline"] ?? "");
   <section class="section reveal">
     <div class="section__head">
       <div>
-        <p class="kicker">In programma</p>
         <h2>Prossime attività</h2>
       </div>
       <a class="btn-ghost" href="<?= data_h(site_asset("attivita")) ?>?tab=future">Tutte le attività</a>
@@ -55,7 +54,7 @@ site_header("home", $name, $site["tagline"] ?? "");
     <div class="event-list">
       <?php foreach ($upcoming as $item) {
           $dt = date_create((string) ($item["data"] ?? ""));
-          $day = $dt ? $dt->format("j") : "—";
+          $day = $dt ? $dt->format("j") : "-";
           $month = $dt ? $dt->format("M") : "";
           ?>
         <a class="event-card reveal" href="<?= data_h(site_asset("attivita-dettaglio")) ?>?id=<?= data_h($item["id"]) ?>">
@@ -77,7 +76,6 @@ site_header("home", $name, $site["tagline"] ?? "");
   <section class="section reveal">
     <div class="section__head">
       <div>
-        <p class="kicker">Chi siamo</p>
         <h2>Breve titolo per la sezione chi siamo</h2>
       </div>
     </div>
@@ -89,7 +87,6 @@ site_header("home", $name, $site["tagline"] ?? "");
 <?php } ?>
 
 <section class="cta-band reveal">
-  <p class="kicker">Sostienici</p>
   <h2>Destina l’8×1000 a SolGuido</h2>
   <p>Un modo concreto per far crescere progetti musicali e incontri sul territorio.</p>
   <div class="hero__cta">

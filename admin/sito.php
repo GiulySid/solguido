@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ob_start();
 ?>
 <a class="admin-back" href="index.php">← Contenuti</a>
-<p class="admin-kicker">Sito</p>
 <h1 class="admin-title">Testi e contatti</h1>
 <form class="admin-form" method="post">
   <?= admin_csrf_field() ?>

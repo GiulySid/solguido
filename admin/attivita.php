@@ -54,7 +54,6 @@ ob_start();
 <a class="admin-back" href="index.php">← Contenuti</a>
 <div class="admin-toolbar">
   <div>
-    <p class="admin-kicker">Calendario</p>
     <h1 class="admin-title">Attività</h1>
   </div>
   <div class="admin-toolbar__actions">

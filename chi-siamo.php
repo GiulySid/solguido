@@ -6,7 +6,6 @@ $site = data_site();
 site_header("chi-siamo", "Chi siamo", "Chi è SolGuido.");
 ?>
 <header class="page-head reveal">
-  <p class="kicker">Chi siamo</p>
   <h1>Breve titolo per la sezione chi siamo</h1>
 </header>
 <div class="prose reveal">

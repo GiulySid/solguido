@@ -12,7 +12,7 @@ if (!function_exists("admin_bacheca_block")) {
         ob_start();
         echo '<section class="admin-section">';
         echo '<div class="admin-toolbar" style="margin-top:0">';
-        echo '<p class="admin-kicker" style="margin:0">' . admin_h($title) . " · " . count($posts) . "</p>";
+        echo '<p style="margin:0;font-weight:700">' . admin_h($title) . " · " . count($posts) . "</p>";
         echo "</div>";
         if (!$posts) {
             echo '<p class="admin-empty">Nessun messaggio.</p>';
@@ -26,7 +26,7 @@ if (!function_exists("admin_bacheca_block")) {
             if ($img !== "") {
                 echo '<img class="admin-thumb" src="' . admin_h(site_asset($img)) . '" alt="" style="margin-bottom:0.5rem">';
             }
-            echo "<h2>" . admin_h($post["autore"] ?? "—");
+            echo "<h2>" . admin_h($post["autore"] ?? "-");
             if (!empty($post["fromGuido"])) {
                 echo '<span class="admin-badge">Guido</span>';
             }
@@ -145,7 +145,6 @@ $hidden = data_bacheca_posts(["hidden"]);
 ob_start();
 ?>
 <a class="admin-back" href="index.php">← Contenuti</a>
-<p class="admin-kicker">Chat</p>
 <h1 class="admin-title">Bacheca</h1>
 <p class="admin-lead">
   In coda: <strong><?= count($pending) ?></strong> da approvare ·
@@ -160,7 +159,7 @@ ob_start();
 <?= admin_bacheca_block("In attesa di approvazione", $pending, ["approve" => "Approva", "hide" => "Nascondi", "delete" => "Elimina"]) ?>
 
 <section class="admin-section">
-  <p class="admin-kicker">Scrivi come Guido</p>
+  <h2 style="font-family:var(--display);font-size:1.35rem;margin-bottom:0.75rem">Scrivi come Guido</h2>
   <form class="admin-form" method="post" enctype="multipart/form-data">
     <?= admin_csrf_field() ?>
     <input type="hidden" name="action" value="guido_post">

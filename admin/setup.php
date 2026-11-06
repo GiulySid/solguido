@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $confirm = (string) ($_POST["confirm"] ?? "");
 
     if (!preg_match("/^[A-Za-z0-9._-]{2,32}$/", $username)) {
-        $error = "Username: 2–32 lettere, numeri, punti o trattini.";
+        $error = "Username: 2-32 lettere, numeri, punti o trattini.";
     } elseif (strlen($password) < 8) {
         $error = "Usa una password di almeno 8 caratteri.";
     } elseif (!hash_equals($password, $confirm)) {
@@ -37,7 +37,6 @@ ob_start();
 ?>
 <div class="admin-auth">
   <div class="admin-auth__card">
-    <p class="admin-kicker">Primo accesso</p>
     <h1 class="admin-title">Crea l’accesso</h1>
     <p class="admin-lead">Imposta username e password dell’admin subito dopo il primo upload, prima che qualcun altro apra questa pagina.</p>
     <?php if ($error) { ?>

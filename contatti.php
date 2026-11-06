@@ -47,14 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 site_header("contatti", "Contatti", "Scrivi a SolGuido.");
 ?>
 <header class="page-head reveal">
-  <p class="kicker">Contatti</p>
   <h1>Scrivici</h1>
   <p>Per collaborazioni, eventi o se vuoi associarti.</p>
 </header>
 
 <div class="form-board reveal">
   <aside class="contact-aside">
-    <p class="kicker">Dove trovarci</p>
+    <h2>Dove trovarci</h2>
     <?php if (!empty($site["email"])) { ?>
       <a href="mailto:<?= data_h($site["email"]) ?>"><?= data_h($site["email"]) ?></a>
     <?php } ?>
