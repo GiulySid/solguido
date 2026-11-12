@@ -35,7 +35,7 @@ function site_header($current, $title, $description = "", $opts = []) {
   <?php if (!empty($opts["robots"])) { ?>
     <meta name="robots" content="<?= data_h($opts["robots"]) ?>">
   <?php } ?>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F45B4B'/%3E%3Cpath d='M28 18v28M28 28c6 0 12-2 12-8' stroke='%23FFF5E6' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FF8738'/%3E%3Cpath d='M28 18v28M28 28c6 0 12-2 12-8' stroke='%23FFF5E6' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Josefin+Slab:wght@500;600;700&display=swap" rel="stylesheet">

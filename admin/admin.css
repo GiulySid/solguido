@@ -13,11 +13,12 @@
   --cream: #FFF5E6;
   --forest: #263F36;
 
-  --bg: var(--forest);
+  --ember: #2C2118;
+  --bg: var(--ember);
   --fg: var(--cream);
   --muted: rgba(255, 245, 230, 0.62);
   --accent: var(--golden);
-  --accent-2: var(--turquoise);
+  --accent-2: var(--tangerine);
   --line: rgba(255, 245, 230, 0.14);
   --font: "Josefin Sans", system-ui, sans-serif;
   --display: "Josefin Slab", Georgia, serif;
@@ -143,8 +144,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
   border-radius: 0.55rem;
 }
 
-.admin-btn { background: var(--coral); color: var(--cream); }
-.admin-btn:hover { background: var(--tangerine); color: var(--forest); }
+.admin-btn { background: var(--tangerine); color: var(--cream); }
+.admin-btn:hover { background: var(--golden); color: var(--ember); }
 .admin-btn-ghost { color: var(--muted); background: rgba(255, 255, 255, 0.06); }
 
 .admin-item {

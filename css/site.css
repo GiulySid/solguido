@@ -14,30 +14,31 @@
   --cream: #FFF5E6;
   --cream-deep: #F5E6D0;
   --forest: #263F36;
+  --ember: #2C2118;
 
-  /* Semantic tokens */
-  --ink: var(--forest);
-  --muted: #4d655b;
+  /* Semantic tokens – warm primary (golden / tangerine) */
+  --ink: var(--ember);
+  --muted: #6B5848;
   --paper: var(--cream);
   --paper-2: var(--cream-deep);
   --foam: #fffaf0;
   --ground: var(--cream);
   --ground-deep: var(--cream-deep);
-  --accent: var(--coral);
-  --accent-deep: #d9483a;
-  --accent-warm: var(--tangerine);
+  --accent: var(--tangerine);
+  --accent-deep: #e56f20;
+  --accent-warm: var(--coral);
   --highlight: var(--golden);
-  --nature: var(--green);
-  --nature-soft: #d7f0e4;
+  --nature: var(--tangerine);
+  --nature-soft: #FFE4B8;
   --info: var(--sky);
-  --lake: var(--green);
+  --lake: var(--tangerine);
   --lake-soft: var(--nature-soft);
   --gold: var(--golden);
   --creative: var(--violet);
   --bubble-user: #ffffff;
   --bubble-guido: #fff0d6;
-  --line: rgba(38, 63, 54, 0.14);
-  --shadow: 0 8px 24px rgba(38, 63, 54, 0.08);
+  --line: rgba(44, 33, 24, 0.14);
+  --shadow: 0 8px 24px rgba(44, 33, 24, 0.1);
   --radius: 0.55rem;
   --font: "Josefin Sans", system-ui, sans-serif;
   --display: "Josefin Slab", Georgia, serif;
@@ -76,13 +77,13 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 -12px 28px rgba(38, 63, 54, 0.2));
+  filter: drop-shadow(0 -12px 28px rgba(44, 33, 24, 0.18));
 }
 
-.sky__layer { fill: var(--forest); }
-.sky__layer--far { fill: var(--turquoise); opacity: 0.35; }
-.sky__layer--mid { fill: var(--green); opacity: 0.72; }
-.sky__layer--near { fill: var(--forest); opacity: 0.94; }
+.sky__layer { fill: var(--ember); }
+.sky__layer--far { fill: var(--golden); opacity: 0.45; }
+.sky__layer--mid { fill: var(--tangerine); opacity: 0.7; }
+.sky__layer--near { fill: var(--ember); opacity: 0.92; }
 
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
@@ -136,7 +137,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--coral);
+  background: var(--tangerine);
   color: var(--cream);
   font-size: 1.2rem;
   line-height: 1;
@@ -181,7 +182,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(38, 63, 54, 0.52);
+  background: rgba(44, 33, 24, 0.52);
 }
 
 .nav-backdrop[hidden] { display: none !important; }
@@ -274,7 +275,7 @@ body[data-page="home"] .site-main > :not(.hero) {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(38, 63, 54, 0.72);
+  background: rgba(44, 33, 24, 0.7);
 }
 
 .hero h1,
@@ -318,13 +319,13 @@ body[data-page="home"] .site-main > :not(.hero) {
 }
 
 .btn {
-  background: var(--coral);
+  background: var(--tangerine);
   color: var(--cream);
 }
 
 .btn:hover {
-  background: var(--tangerine);
-  color: var(--forest);
+  background: var(--golden);
+  color: var(--ember);
 }
 
 .btn-ghost {
@@ -341,7 +342,7 @@ body[data-page="home"] .site-main > :not(.hero) {
 
 .btn-ghost:hover {
   background: var(--nature-soft);
-  color: var(--forest);
+  color: var(--ember);
 }
 
 .hero .btn-ghost:hover {
@@ -362,12 +363,12 @@ body[data-page="home"] .site-main > :not(.hero) {
 
 .cta-band .btn {
   background: var(--golden);
-  color: var(--forest);
+  color: var(--ember);
 }
 
 .cta-band .btn:hover {
   background: var(--tangerine);
-  color: var(--forest);
+  color: var(--cream);
 }
 
 .back-link {
@@ -402,7 +403,7 @@ body[data-page="home"] .site-main > :not(.hero) {
 .section { padding: 1.5rem 0 2.5rem; }
 
 .section--forest {
-  background: var(--forest);
+  background: var(--ember);
   color: var(--cream);
   border-radius: var(--radius);
   padding: 1.6rem 1.4rem;
@@ -466,13 +467,13 @@ body[data-page="home"] .site-main > :not(.hero) {
   min-width: 1.4rem;
   padding: 0.1rem 0.4rem;
   border-radius: var(--radius);
-  background: rgba(38, 63, 54, 0.08);
+  background: rgba(44, 33, 24, 0.08);
   font-size: 0.75rem;
   text-align: center;
 }
 
 .seg-control__btn.is-active {
-  background: var(--green);
+  background: var(--tangerine);
   color: var(--cream);
 }
 
@@ -501,10 +502,10 @@ body[data-page="home"] .site-main > :not(.hero) {
   width: 4.2rem;
   text-align: center;
   border-radius: var(--radius);
-  background: var(--green);
+  background: var(--golden);
   padding: 0.7rem 0.4rem;
   align-self: start;
-  color: #fff;
+  color: var(--ember);
 }
 
 .event-card__date strong {
@@ -516,7 +517,7 @@ body[data-page="home"] .site-main > :not(.hero) {
 
 .event-card__date span {
   font-size: 0.75rem;
-  color: rgba(255, 245, 230, 0.85);
+  color: rgba(44, 33, 24, 0.7);
 }
 
 .event-card h3 {
@@ -554,7 +555,7 @@ body[data-page="home"] .site-main > :not(.hero) {
   margin: 2rem 0;
   padding: 1.8rem 1.5rem;
   border-radius: var(--radius);
-  background: var(--forest);
+  background: var(--ember);
   color: var(--cream);
   display: grid;
   gap: 0.85rem;
@@ -599,7 +600,7 @@ body[data-page="home"] .site-main > :not(.hero) {
   border-radius: var(--radius);
   background: var(--cream-deep);
   text-align: center;
-  color: var(--forest);
+  color: var(--ember);
 }
 
 .site-form {
@@ -823,14 +824,14 @@ body[data-page="home"] .site-main > :not(.hero) {
   height: 2.6rem;
   border: 0;
   border-radius: var(--radius);
-  background: var(--green);
+  background: var(--tangerine);
   color: var(--cream);
   display: grid;
   place-items: center;
   cursor: pointer;
 }
 
-.chat-compose__send:hover { background: var(--turquoise); color: var(--forest); }
+.chat-compose__send:hover { background: var(--golden); color: var(--ember); }
 
 .chat-compose__file {
   font-size: 0.78rem;
@@ -853,7 +854,7 @@ body[data-page="home"] .site-main > :not(.hero) {
 .site-footer {
   margin-top: 2rem;
   padding: 2.5rem 0 7rem;
-  background: var(--forest);
+  background: var(--ember);
   color: var(--cream);
 }
 
@@ -931,7 +932,7 @@ body[data-page="home"] .site-main > :not(.hero) {
     bottom: 0;
     width: min(19.5rem, calc(100vw - 2.75rem));
     background: var(--cream);
-    box-shadow: -18px 0 48px rgba(38, 63, 54, 0.22);
+    box-shadow: -18px 0 48px rgba(44, 33, 24, 0.22);
     padding: 1.1rem 1rem 1.6rem;
     display: flex;
     flex-direction: column;
@@ -985,8 +986,8 @@ body[data-page="home"] .site-main > :not(.hero) {
 
   .site-nav__links a[aria-current="page"],
   .site-nav__links a:hover {
-    background: rgba(53, 168, 121, 0.14);
-    color: var(--green);
+    background: var(--nature-soft);
+    color: var(--ember);
   }
 
   body.nav-open { overflow: hidden; }
