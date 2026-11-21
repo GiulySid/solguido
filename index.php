@@ -34,12 +34,16 @@ site_header("home", $name, $site["tagline"] ?? "");
   </div>
   <div class="hero__veil" aria-hidden="true"></div>
   <p class="hero__brand"><?= data_h($name) ?></p>
-  <h1><?= data_h($site["tagline"] ?: "Musica che unisce comunità") ?></h1>
-  <p>Breve descrizione del progetto</p>
+  <?php if (!empty($site["tagline"])) { ?>
+    <h1><?= data_h($site["tagline"]) ?></h1>
+  <?php } ?>
+  <?php if (!empty($site["heroLead"])) { ?>
+    <p><?= data_h($site["heroLead"]) ?></p>
+  <?php } ?>
   <div class="hero__cta">
-    <a class="btn" href="<?= data_h(site_asset("contatti")) ?>">Contatti</a>
-    <a class="btn-ghost" href="<?= data_h(site_asset("attivita")) ?>">Attività</a>
-    <a class="btn-ghost" href="<?= data_h(site_asset("bacheca")) ?>">Bacheca</a>
+    <a class="btn" href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Contatti") ?></a>
+    <a class="btn-ghost" href="<?= data_h(site_asset("attivita")) ?>"><?= data_h($site["attivitaTitolo"] ?: "Eventi") ?></a>
+    <a class="btn-ghost" href="<?= data_h(site_asset("bacheca")) ?>"><?= data_h($site["bachecaTitolo"] ?: "Ricordi") ?></a>
   </div>
 </section>
 
@@ -47,9 +51,9 @@ site_header("home", $name, $site["tagline"] ?? "");
   <section class="section reveal">
     <div class="section__head">
       <div>
-        <h2>Prossime attività</h2>
+        <h2><?= data_h($site["attivitaTitolo"] ?: "Prossimi eventi") ?></h2>
       </div>
-      <a class="btn-ghost" href="<?= data_h(site_asset("attivita")) ?>?tab=future">Tutte le attività</a>
+      <a class="btn-ghost" href="<?= data_h(site_asset("attivita")) ?>?tab=future">Tutti gli eventi</a>
     </div>
     <div class="event-list">
       <?php foreach ($upcoming as $item) {
@@ -76,7 +80,7 @@ site_header("home", $name, $site["tagline"] ?? "");
   <section class="section reveal">
     <div class="section__head">
       <div>
-        <h2>Breve titolo per la sezione chi siamo</h2>
+        <h2><?= data_h($site["chiSiamoTitolo"] ?: "Chi siamo") ?></h2>
       </div>
     </div>
     <div class="prose">
@@ -86,13 +90,19 @@ site_header("home", $name, $site["tagline"] ?? "");
   </section>
 <?php } ?>
 
-<section class="cta-band reveal">
-  <h2>Destina l’8×1000 a SolGuido</h2>
-  <p>Un modo concreto per far crescere progetti musicali e incontri sul territorio.</p>
-  <div class="hero__cta">
-    <a class="btn" href="<?= data_h(site_asset("sostienici")) ?>">Scopri l’8×1000</a>
-    <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>">Scrivici</a>
-  </div>
-</section>
+<?php if (!empty($site["homeCtaTitolo"]) || !empty($site["homeCtaTesto"])) { ?>
+  <section class="cta-band reveal">
+    <?php if (!empty($site["homeCtaTitolo"])) { ?>
+      <h2><?= data_h($site["homeCtaTitolo"]) ?></h2>
+    <?php } ?>
+    <?php if (!empty($site["homeCtaTesto"])) { ?>
+      <p><?= data_h($site["homeCtaTesto"]) ?></p>
+    <?php } ?>
+    <div class="hero__cta">
+      <a class="btn" href="<?= data_h(site_asset("sostienici")) ?>"><?= data_h($site["sostieniciTitolo"] ?: "Sostienici") ?></a>
+      <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>#associati">Diventa socio</a>
+    </div>
+  </section>
+<?php } ?>
 <?php
 site_footer();

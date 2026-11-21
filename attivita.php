@@ -36,10 +36,16 @@ if ($tab === "past" && !$past && $future) {
 
 $shown = $tab === "past" ? $past : $future;
 
-site_header("attivita", "Attività", "Eventi e iniziative SolGuido.");
+$site = data_site();
+$titolo = trim((string) ($site["attivitaTitolo"] ?? "")) ?: "Prossimi eventi";
+$lead = trim((string) ($site["attivitaLead"] ?? ""));
+site_header("attivita", $titolo, $lead !== "" ? $lead : $titolo);
 ?>
 <header class="page-head reveal">
-  <h1>Eventi, laboratori, concerti</h1>
+  <h1><?= data_h($titolo) ?></h1>
+  <?php if ($lead !== "") { ?>
+    <p><?= data_h($lead) ?></p>
+  <?php } ?>
 </header>
 
 <?php if (!$items) { ?>

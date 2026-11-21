@@ -78,10 +78,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $posts = data_bacheca_posts(["approved"]);
 $wallpaper = site_asset("img/placeholders/bacheca-wallpaper.jpg");
-site_header("bacheca", "Bacheca", "Messaggi per SolGuido, come una chat con Guido.");
+$site = data_site();
+$titolo = trim((string) ($site["bachecaTitolo"] ?? "")) ?: "Bacheca";
+$lead = trim((string) ($site["bachecaLead"] ?? ""));
+site_header("bacheca", $titolo, $lead !== "" ? $lead : $titolo);
 ?>
 <header class="page-head reveal">
-  <h1>Bacheca</h1>
+  <h1><?= data_h($titolo) ?></h1>
+  <?php if ($lead !== "") { ?>
+    <p><?= data_h($lead) ?></p>
+  <?php } ?>
 </header>
 
 <div class="bacheca reveal">

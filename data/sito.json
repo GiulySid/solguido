@@ -1,12 +1,75 @@
 {
     "nome": "SolGuido",
-    "tagline": "Sottotitolo del sito",
-    "chiSiamo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Breve testo per la sezione chi siamo.",
-    "cosaFacciamo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Breve testo per la sezione cosa facciamo.",
-    "email": "solguido.associazione@gmail.com",
-    "instagram": "https://www.instagram.com/",
-    "facebook": "https://www.facebook.com/",
-    "codiceFiscale": "XXXXXXXXXXXXXXX",
-    "testo8x1000": "Con la dichiarazione dei redditi puoi destinare l’8×1000 a SolGuido.\n\nIndica il codice fiscale dell’associazione nello spazio dedicato. I fondi sostengono attività musicali, progetti didattici e iniziative sul territorio.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder: sostituire con le istruzioni ufficiali quando l’associazione sarà costituita.",
+    "nomeLegale": "Sol Guido ODV",
+    "tagline": "Troviamoci. Facciamo qualcosa insieme",
+    "heroLead": "Il ponte che Guido ha costruito continua a esistere: lo attraversiamo ogni volta che ci ritroviamo in compagnia.",
+    "chiSiamoTitolo": "Chi siamo",
+    "chiSiamoLead": "Il ponte che Guido ha costruito continua a esistere.",
+    "chiSiamo": "La sua curiosità e apertura l’hanno sempre portato a unire mondi apparentemente lontanissimi. Ma per Guido non lo erano. Perché Guido sapeva attraversare i ponti.\n\nTra la musica e lo sport. Tra la cultura e il divertimento. Tra i ragazzi e gli adulti. Tra il rigore e l’ironia. Tra la passione personale e il desiderio di condividerla. E forse è proprio questo il suo lascito più grande.\n\nNon soltanto quello che ha fatto, ma tutte le persone che ha messo in relazione. Tutti quei piccoli semi che ha contribuito a far crescere. Tutte quelle esperienze che, grazie a lui, sono diventate tasselli importanti delle vite di molti.\n\nE oggi, nel ricordarlo, ci accorgiamo che quel ponte che Guido ha costruito continua a esistere.\n\nLo attraversiamo ogni volta che ci ritroviamo in compagnia.\nOgni volta che facciamo musica.\nOgni volta che raccontiamo un suo aneddoto e ci scappa un sorriso.\nOgni volta che qualcuno dice: “Dài, troviamoci. Facciamo qualcosa insieme”.\n\nPerché, in fondo, è proprio così che Guido continua a stare con noi.",
+    "cosaFacciamoTitolo": "Cosa facciamo",
+    "cosaFacciamoLead": "Incontri, musica e progetti condivisi.",
+    "cosaFacciamo": "Organizziamo incontri, musica e progetti condivisi: occasioni per ritrovarsi, collaborare e tenere vivo il ponte che Guido ha costruito tra persone, territori e passioni.",
+    "attivitaTitolo": "Prossimi eventi",
+    "attivitaLead": "Incontri e appuntamenti della comunità SolGuido.",
+    "bachecaTitolo": "Condividi i tuoi ricordi",
+    "bachecaLead": "Uno spazio per racconti, pensieri e messaggi lasciati alla comunità.",
+    "contattiTitolo": "Scrivici",
+    "contattiLead": "Siamo felici di ricevere proposte e di attivare collaborazioni.",
+    "sostieniciTitolo": "Aiutaci a raggiungere gli obiettivi",
+    "testoSostienici": "Ecco come puoi sostenerci.",
+    "sostieniciSocioIntro": "Scegli la quota che preferisci e scrivici per associarti.",
+    "testoDonazione": "Nella causale indica nome, cognome e motivo del versamento.",
+    "homeCtaTitolo": "Aiutaci a raggiungere gli obiettivi",
+    "homeCtaTesto": "Diventa socio, fai una donazione o destina il 5×1000 a Sol Guido ODV.",
+    "rassegnaTitolo": "Rassegna stampa",
+    "rassegnaVuoto": "Qui troverai articoli, interviste e materiali stampa. Presto in aggiornamento.",
+    "email": "solguido.odv@gmail.com",
+    "pec": "solguido@pec.it",
+    "telefono": "3925035819",
+    "sede": "via Isidoro De’ Capitanio, 4 – 24020 Ranica (BG)",
+    "iban": "IT56T0306909606100000420808",
+    "instagram": "https://www.instagram.com/solguido.odv/",
+    "facebook": "https://www.facebook.com/share/1HjdMK121u/",
+    "codiceFiscale": "95270100167",
+    "testo5x1000": "Con la dichiarazione dei redditi puoi destinare il 5×1000 a Sol Guido ODV.\n\nIndica il codice fiscale dell’organizzazione nello spazio dedicato al 5×1000. I fondi aiutano a costruire incontri, progetti e attività condivise.",
+    "quoteSocio": [
+        {
+            "nome": "Adagio",
+            "dettaglio": "quota annuale 10 euro"
+        },
+        {
+            "nome": "Moderato",
+            "dettaglio": "quota annuale 25 euro"
+        },
+        {
+            "nome": "Allegro",
+            "dettaglio": "quota annuale 50 euro"
+        },
+        {
+            "nome": "Vivace",
+            "dettaglio": "dona per aiutarci a costruire un evento"
+        },
+        {
+            "nome": "Socio volontario",
+            "dettaglio": "quota socio + quota assicurativa: ci aiuti quando c’è bisogno"
+        }
+    ],
+    "modiSostegno": [
+        "Diventa socio",
+        "Effettua una donazione volontaria",
+        "Proponiti come sponsor",
+        "Dona il 5×1000"
+    ],
+    "documenti": [
+        {
+            "label": "Atto costitutivo",
+            "url": ""
+        },
+        {
+            "label": "Statuto",
+            "url": ""
+        }
+    ],
+    "rassegnaStampa": [],
     "firmaGuido": "🌈 🎵 🎺"
 }

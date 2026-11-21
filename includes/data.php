@@ -61,14 +61,42 @@ function data_default($name) {
         case "sito":
             return [
                 "nome" => "SolGuido",
-                "tagline" => "Sottotitolo del sito.",
+                "nomeLegale" => "",
+                "tagline" => "",
+                "heroLead" => "",
+                "chiSiamoTitolo" => "Chi siamo",
+                "chiSiamoLead" => "",
                 "chiSiamo" => "",
+                "cosaFacciamoTitolo" => "Cosa facciamo",
+                "cosaFacciamoLead" => "",
                 "cosaFacciamo" => "",
+                "attivitaTitolo" => "Prossimi eventi",
+                "attivitaLead" => "",
+                "bachecaTitolo" => "Condividi i tuoi ricordi",
+                "bachecaLead" => "",
+                "contattiTitolo" => "Scrivici",
+                "contattiLead" => "",
+                "sostieniciTitolo" => "Sostienici",
+                "testoSostienici" => "",
+                "sostieniciSocioIntro" => "",
+                "testoDonazione" => "",
+                "homeCtaTitolo" => "",
+                "homeCtaTesto" => "",
+                "rassegnaTitolo" => "Rassegna stampa",
+                "rassegnaVuoto" => "",
                 "email" => "",
+                "pec" => "",
+                "telefono" => "",
+                "sede" => "",
+                "iban" => "",
                 "instagram" => "",
                 "facebook" => "",
                 "codiceFiscale" => "",
-                "testo8x1000" => "",
+                "testo5x1000" => "",
+                "quoteSocio" => [],
+                "modiSostegno" => [],
+                "documenti" => [],
+                "rassegnaStampa" => [],
                 "firmaGuido" => GUIDO_FIRMA_DEFAULT,
             ];
         case "attivita":
@@ -133,7 +161,11 @@ function data_write($name, $payload) {
 }
 
 function data_site() {
-    return data_read("sito");
+    $site = data_read("sito");
+    if (trim((string) ($site["testo5x1000"] ?? "")) === "" && trim((string) ($site["testo8x1000"] ?? "")) !== "") {
+        $site["testo5x1000"] = $site["testo8x1000"];
+    }
+    return $site;
 }
 
 function data_firma_guido() {

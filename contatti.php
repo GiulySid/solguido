@@ -4,12 +4,14 @@ require __DIR__ . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "layo
 
 $site = data_site();
 $to = trim((string) ($site["email"] ?? ""));
+$documenti = is_array($site["documenti"] ?? null) ? $site["documenti"] : [];
 $sent = false;
 $error = "";
 $values = [
     "nome" => "",
     "email" => "",
     "telefono" => "",
+    "interesse" => "messaggio",
     "messaggio" => "",
 ];
 
@@ -17,12 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $values["nome"] = trim((string) ($_POST["nome"] ?? ""));
     $values["email"] = trim((string) ($_POST["email"] ?? ""));
     $values["telefono"] = trim((string) ($_POST["telefono"] ?? ""));
+    $values["interesse"] = trim((string) ($_POST["interesse"] ?? "messaggio"));
     $values["messaggio"] = trim((string) ($_POST["messaggio"] ?? ""));
     $honeypot = trim((string) ($_POST["sg_hp_field"] ?? ""));
 
     if ($honeypot !== "") {
         $sent = false;
-        $values = ["nome" => "", "email" => "", "telefono" => "", "messaggio" => ""];
+        $values = ["nome" => "", "email" => "", "telefono" => "", "interesse" => "messaggio", "messaggio" => ""];
     } elseif ($values["nome"] === "" || $values["email"] === "" || $values["messaggio"] === "") {
         $error = "Compila nome, email e messaggio.";
     } elseif (!filter_var($values["email"], FILTER_VALIDATE_EMAIL)) {
@@ -32,30 +35,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $body = "Nome: " . $values["nome"] . "\n"
             . "Email: " . $values["email"] . "\n"
-            . "Telefono: " . $values["telefono"] . "\n\n"
+            . "Telefono: " . $values["telefono"] . "\n"
+            . "Interesse: " . $values["interesse"] . "\n\n"
             . $values["messaggio"] . "\n";
         $ok = data_send_mail($to, "Messaggio dal sito SolGuido · " . $values["nome"], $body, $values["email"]);
         if ($ok) {
             $sent = true;
-            $values = ["nome" => "", "email" => "", "telefono" => "", "messaggio" => ""];
+            $values = ["nome" => "", "email" => "", "telefono" => "", "interesse" => "messaggio", "messaggio" => ""];
         } else {
             $error = "Invio non riuscito. Scrivici a " . $to . ".";
         }
     }
 }
 
-site_header("contatti", "Contatti", "Scrivi a SolGuido.");
+$legale = trim((string) ($site["nomeLegale"] ?? "")) ?: ($site["nome"] ?? "SolGuido");
+$titolo = trim((string) ($site["contattiTitolo"] ?? "")) ?: "Contatti";
+$lead = trim((string) ($site["contattiLead"] ?? ""));
+site_header("contatti", $titolo, $lead !== "" ? $lead : $titolo);
 ?>
 <header class="page-head reveal">
-  <h1>Scrivici</h1>
-  <p>Per collaborazioni, eventi o se vuoi associarti.</p>
+  <h1><?= data_h($titolo) ?></h1>
+  <?php if ($lead !== "") { ?>
+    <p><?= data_h($lead) ?></p>
+  <?php } ?>
 </header>
 
 <div class="form-board reveal">
   <aside class="contact-aside">
-    <h2>Dove trovarci</h2>
+    <h2>Contatti</h2>
+    <p><strong><?= data_h($legale) ?></strong></p>
+    <?php if (!empty($site["sede"])) { ?>
+      <p>Sede legale: <?= data_h($site["sede"]) ?></p>
+    <?php } ?>
+    <?php if (!empty($site["codiceFiscale"])) { ?>
+      <p>CF: <?= data_h($site["codiceFiscale"]) ?></p>
+    <?php } ?>
+    <?php if (!empty($site["iban"])) { ?>
+      <p>IBAN: <?= data_h($site["iban"]) ?></p>
+    <?php } ?>
     <?php if (!empty($site["email"])) { ?>
       <a href="mailto:<?= data_h($site["email"]) ?>"><?= data_h($site["email"]) ?></a>
+    <?php } ?>
+    <?php if (!empty($site["pec"])) { ?>
+      <a href="mailto:<?= data_h($site["pec"]) ?>">PEC: <?= data_h($site["pec"]) ?></a>
+    <?php } ?>
+    <?php if (!empty($site["telefono"])) { ?>
+      <a href="tel:<?= data_h(preg_replace('/\s+/', '', (string) $site["telefono"])) ?>">Tel: <?= data_h($site["telefono"]) ?></a>
     <?php } ?>
     <?php if (!empty($site["instagram"])) { ?>
       <a href="<?= data_h($site["instagram"]) ?>" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -63,9 +88,23 @@ site_header("contatti", "Contatti", "Scrivi a SolGuido.");
     <?php if (!empty($site["facebook"])) { ?>
       <a href="<?= data_h($site["facebook"]) ?>" target="_blank" rel="noopener noreferrer">Facebook</a>
     <?php } ?>
+
+    <?php
+    $docsConUrl = array_values(array_filter($documenti, static function ($doc) {
+        return trim((string) ($doc["url"] ?? "")) !== "";
+    }));
+    ?>
+    <?php if ($docsConUrl) { ?>
+      <h2 style="margin-top:1rem">Documenti</h2>
+      <?php foreach ($docsConUrl as $doc) { ?>
+        <a href="<?= data_h($doc["url"]) ?>" target="_blank" rel="noopener noreferrer"><?= data_h($doc["label"] ?? "Documento") ?></a>
+      <?php } ?>
+    <?php } else { ?>
+      <p style="margin-top:0.75rem;color:var(--muted)">Atto costitutivo e statuto: in arrivo.</p>
+    <?php } ?>
   </aside>
 
-  <form class="site-form" method="post" novalidate>
+  <form class="site-form" method="post" id="associati" novalidate>
     <?php if ($sent) { ?>
       <p class="form-note form-note--ok">Grazie. Ti rispondiamo appena possibile.</p>
     <?php } ?>
@@ -86,6 +125,24 @@ site_header("contatti", "Contatti", "Scrivi a SolGuido.");
     <label>
       <span>Telefono</span>
       <input type="text" name="telefono" maxlength="40" value="<?= data_h($values["telefono"]) ?>">
+    </label>
+    <label>
+      <span>Di cosa si tratta</span>
+      <select name="interesse">
+        <?php
+        $opzioni = [
+            "messaggio" => "Messaggio generale",
+            "socio" => "Voglio diventare socio",
+            "sponsor" => "Proposta di sponsorizzazione",
+            "collaborazione" => "Proposta / collaborazione",
+            "altro" => "Altro",
+        ];
+        foreach ($opzioni as $key => $label) {
+            $sel = $values["interesse"] === $key ? " selected" : "";
+            echo '<option value="' . data_h($key) . '"' . $sel . ">" . data_h($label) . "</option>";
+        }
+        ?>
+      </select>
     </label>
     <label>
       <span>Messaggio</span>

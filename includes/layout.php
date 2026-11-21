@@ -6,8 +6,8 @@ function site_nav_items() {
     return [
         "chi-siamo" => ["label" => "Chi siamo", "href" => site_asset("chi-siamo")],
         "cosa-facciamo" => ["label" => "Cosa facciamo", "href" => site_asset("cosa-facciamo")],
-        "attivita" => ["label" => "Attività", "href" => site_asset("attivita")],
-        "bacheca" => ["label" => "Bacheca", "href" => site_asset("bacheca")],
+        "attivita" => ["label" => "Eventi", "href" => site_asset("attivita")],
+        "bacheca" => ["label" => "Ricordi", "href" => site_asset("bacheca")],
         "sostienici" => ["label" => "Sostienici", "href" => site_asset("sostienici")],
         "contatti" => ["label" => "Contatti", "href" => site_asset("contatti")],
     ];
@@ -35,7 +35,8 @@ function site_header($current, $title, $description = "", $opts = []) {
   <?php if (!empty($opts["robots"])) { ?>
     <meta name="robots" content="<?= data_h($opts["robots"]) ?>">
   <?php } ?>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FF8738'/%3E%3Cpath d='M28 18v28M28 28c6 0 12-2 12-8' stroke='%23FFF5E6' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="icon" href="<?= data_h(site_asset("img/favicon.svg")) ?>" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="<?= data_h(site_asset("img/logo-mark.svg")) ?>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Josefin+Slab:wght@500;600;700&display=swap" rel="stylesheet">
@@ -69,8 +70,7 @@ function site_header($current, $title, $description = "", $opts = []) {
 
   <header class="site-header">
     <a class="brand" href="<?= data_h(site_asset("")) ?>">
-      <span class="brand__mark" aria-hidden="true">𝄞</span>
-      <span class="brand__text"><?= data_h($name) ?></span>
+      <img class="brand__logo" src="<?= data_h(site_asset("img/logo.svg")) ?>" alt="<?= data_h($name) ?>" width="220" height="80">
     </a>
     <?php if (empty($opts["hideNav"])) { ?>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -96,12 +96,21 @@ function site_footer() {
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <p class="footer-name"><?= data_h($name) ?></p>
+        <p class="footer-name"><?= data_h($site["nomeLegale"] ?: $name) ?></p>
         <p class="footer-tag"><?= data_h($site["tagline"] ?? "") ?></p>
+        <?php if (!empty($site["sede"])) { ?>
+          <p class="footer-tag"><?= data_h($site["sede"]) ?></p>
+        <?php } ?>
+        <?php if (!empty($site["codiceFiscale"])) { ?>
+          <p class="footer-tag">CF <?= data_h($site["codiceFiscale"]) ?></p>
+        <?php } ?>
       </div>
       <div class="footer-links">
         <?php if (!empty($site["email"])) { ?>
           <a href="mailto:<?= data_h($site["email"]) ?>"><?= data_h($site["email"]) ?></a>
+        <?php } ?>
+        <?php if (!empty($site["telefono"])) { ?>
+          <a href="tel:<?= data_h(preg_replace('/\s+/', '', (string) $site["telefono"])) ?>"><?= data_h($site["telefono"]) ?></a>
         <?php } ?>
         <?php if (!empty($site["instagram"])) { ?>
           <a href="<?= data_h($site["instagram"]) ?>" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -110,10 +119,10 @@ function site_footer() {
           <a href="<?= data_h($site["facebook"]) ?>" target="_blank" rel="noopener noreferrer">Facebook</a>
         <?php } ?>
         <a href="<?= data_h(site_asset("contatti")) ?>">Contatti</a>
-        <a href="<?= data_h(site_asset("sostienici")) ?>">8×1000</a>
+        <a href="<?= data_h(site_asset("sostienici")) ?>">5×1000</a>
       </div>
     </div>
-    <p class="footer-note">Associazione in formazione · contenuti placeholder</p>
+    <p class="footer-note">Sol Guido ODV</p>
   </footer>
   <script src="<?= data_h(site_asset("js/site.js")) ?>?v=<?= (int) ($GLOBALS["site_js_v"] ?? 0) ?>" defer></script>
 </body>

@@ -4,23 +4,95 @@ require __DIR__ . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "layo
 
 $site = data_site();
 $cf = trim((string) ($site["codiceFiscale"] ?? ""));
-site_header("sostienici", "Sostienici", "Destina l’8×1000 a SolGuido.");
+$iban = trim((string) ($site["iban"] ?? ""));
+$quote = is_array($site["quoteSocio"] ?? null) ? $site["quoteSocio"] : [];
+$modi = is_array($site["modiSostegno"] ?? null) ? $site["modiSostegno"] : [];
+$titolo = trim((string) ($site["sostieniciTitolo"] ?? "")) ?: "Sostienici";
+$intro = trim((string) ($site["testoSostienici"] ?? ""));
+site_header("sostienici", $titolo, $intro !== "" ? $intro : $titolo);
 ?>
 <header class="page-head reveal">
-  <h1>8×1000</h1>
-  <p>Un gesto concreto per sostenere musica, didattica e incontri sul territorio.</p>
+  <h1><?= data_h($titolo) ?></h1>
+  <?php if ($intro !== "") { ?>
+    <p><?= data_h($intro) ?></p>
+  <?php } ?>
 </header>
 
-<div class="form-board reveal">
-  <aside class="support-card">
-    <h2>Codice fiscale</h2>
-    <p class="cf-box"><?= data_h($cf !== "" ? $cf : "XXXXXXXXXXXXXXX") ?></p>
-    <p>Indica questo codice nello spazio 8×1000 della dichiarazione dei redditi.</p>
-    <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>">Scrivici</a>
-  </aside>
-  <div class="prose">
-    <?= data_nl2p($site["testo8x1000"] ?? "") ?>
+<section class="section reveal">
+  <div class="section__head">
+    <div>
+      <h2>Diventa socio</h2>
+    </div>
   </div>
-</div>
+  <?php if (!empty($site["sostieniciSocioIntro"])) { ?>
+    <p class="prose"><?= data_h($site["sostieniciSocioIntro"]) ?></p>
+  <?php } ?>
+  <?php if ($quote) { ?>
+    <ul class="support-tiers">
+      <?php foreach ($quote as $q) {
+          $nome = trim((string) ($q["nome"] ?? ""));
+          $dettaglio = trim((string) ($q["dettaglio"] ?? ""));
+          if ($nome === "") {
+              continue;
+          }
+          ?>
+        <li>
+          <strong><?= data_h($nome) ?></strong>
+          <?php if ($dettaglio !== "") { ?>
+            <span><?= data_h($dettaglio) ?></span>
+          <?php } ?>
+        </li>
+      <?php } ?>
+    </ul>
+  <?php } ?>
+  <p style="margin-top:1.25rem">
+    <a class="btn" href="<?= data_h(site_asset("contatti")) ?>#associati">Compila il modulo</a>
+  </p>
+</section>
+
+<?php if ($modi) { ?>
+<section class="section reveal">
+  <div class="section__head">
+    <div>
+      <h2>Altri modi per sostenerci</h2>
+    </div>
+  </div>
+  <ul class="link-list">
+    <?php foreach ($modi as $modo) {
+        $modo = trim((string) $modo);
+        if ($modo === "" || stripos($modo, "diventa socio") === 0) {
+            continue;
+        }
+        if (stripos($modo, "5") !== false) {
+            echo '<li><a href="#cinque-per-mille">' . data_h($modo) . "</a></li>";
+        } elseif (stripos($modo, "donazione") !== false) {
+            echo '<li><a href="#donazione">' . data_h($modo) . "</a></li>";
+        } else {
+            echo "<li><a href=\"" . data_h(site_asset("contatti")) . "\">" . data_h($modo) . "</a></li>";
+        }
+    } ?>
+  </ul>
+</section>
+<?php } ?>
+
+<section class="form-board reveal" id="donazione">
+  <aside class="support-card">
+    <h2>Donazione volontaria</h2>
+    <?php if ($iban !== "") { ?>
+      <p class="cf-box cf-box--iban"><?= data_h($iban) ?></p>
+      <?php if (!empty($site["testoDonazione"])) { ?>
+        <p><?= data_h($site["testoDonazione"]) ?></p>
+      <?php } ?>
+    <?php } ?>
+    <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Scrivici") ?></a>
+  </aside>
+  <div class="prose" id="cinque-per-mille">
+    <h2>5×1000</h2>
+    <?= data_nl2p($site["testo5x1000"] ?? "") ?>
+    <?php if ($cf !== "") { ?>
+      <p class="cf-box"><?= data_h($cf) ?></p>
+    <?php } ?>
+  </div>
+</section>
 <?php
 site_footer();

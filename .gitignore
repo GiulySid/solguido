@@ -10,3 +10,8 @@ media/bacheca/*
 !media/bacheca/thumbs/
 media/bacheca/thumbs/*
 !media/bacheca/thumbs/.gitkeep
+media/docs/*
+!media/docs/.gitkeep
+node_modules/
+package-lock.json
+img/*-preview.png
