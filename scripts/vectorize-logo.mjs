@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, "..");
 const src = path.join(root, "img", "logo-source.jpg");
 const outFull = path.join(root, "img", "logo.svg");
 const outMark = path.join(root, "img", "logo-mark.svg");
-const outFavicon = path.join(root, "img", "favicon.svg");
+const outFavicon = path.join(root, "img", "favicon.png");
 
 function trace(bufferOrPath, opts = {}) {
   return new Promise((resolve, reject) => {

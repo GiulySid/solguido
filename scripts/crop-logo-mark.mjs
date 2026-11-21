@@ -28,7 +28,7 @@ const fav = withView(full, favView, "Sol Guido");
 
 fs.writeFileSync("img/logo.svg", logo.endsWith("\n") ? logo : logo + "\n");
 fs.writeFileSync("img/logo-mark.svg", mark.endsWith("\n") ? mark : mark + "\n");
-fs.writeFileSync("img/favicon.svg", fav.endsWith("\n") ? fav : fav + "\n");
+fs.writeFileSync("img/favicon.png", fav.endsWith("\n") ? fav : fav + "\n");
 
 for (const [name, svg] of [
   ["logo", logo],

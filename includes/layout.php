@@ -35,7 +35,7 @@ function site_header($current, $title, $description = "", $opts = []) {
   <?php if (!empty($opts["robots"])) { ?>
     <meta name="robots" content="<?= data_h($opts["robots"]) ?>">
   <?php } ?>
-  <link rel="icon" href="<?= data_h(site_asset("img/favicon.svg")) ?>" type="image/svg+xml">
+  <link rel="icon" href="<?= data_h(site_asset("img/favicon.png")) ?>" type="image/svg+xml">
   <link rel="apple-touch-icon" href="<?= data_h(site_asset("img/logo-mark.svg")) ?>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

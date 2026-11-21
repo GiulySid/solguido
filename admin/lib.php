@@ -214,7 +214,7 @@ function admin_layout($title, $body, $options = []) {
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     echo '<meta name="robots" content="noindex, nofollow">';
     echo '<title>' . admin_h($title) . " · SolGuido Admin</title>";
-    echo '<link rel="icon" href="' . admin_h(site_asset("img/favicon.svg")) . '" type="image/svg+xml">';
+    echo '<link rel="icon" href="' . admin_h(site_asset("img/favicon.png")) . '" type="image/svg+xml">';
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
     $cssV = (int) @filemtime(__DIR__ . DIRECTORY_SEPARATOR . "admin.css");
