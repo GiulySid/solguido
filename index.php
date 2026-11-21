@@ -47,7 +47,7 @@ $associazioneTitolo = trim((string) ($site["associazioneTitolo"] ?? ""));
 $associazione = trim((string) ($site["associazione"] ?? ""));
 if ($associazioneTitolo !== "" || $associazione !== "") {
 ?>
-  <section class="section reveal">
+  <section class="section panel panel--orchid reveal">
     <div class="section__head">
       <div>
         <h2><?= data_h($associazioneTitolo !== "" ? $associazioneTitolo : "L’associazione") ?></h2>
@@ -66,7 +66,7 @@ $ispirazioneTitolo = trim((string) ($site["ispirazioneTitolo"] ?? ""));
 $ispirazione = trim((string) ($site["ispirazione"] ?? ""));
 if ($ispirazioneTitolo !== "" || $ispirazione !== "") {
 ?>
-  <section class="section reveal">
+  <section class="section panel panel--green reveal">
     <div class="section__head">
       <div>
         <h2><?= data_h($ispirazioneTitolo !== "" ? $ispirazioneTitolo : "Ispirazione") ?></h2>
@@ -85,7 +85,7 @@ $conosciGuidoTitolo = trim((string) ($site["conosciGuidoTitolo"] ?? ""));
 $conosciGuido = trim((string) ($site["conosciGuido"] ?? ""));
 if ($conosciGuidoTitolo !== "" || $conosciGuido !== "") {
 ?>
-  <section class="section reveal">
+  <section class="section panel panel--violet reveal">
     <div class="section__head">
       <div>
         <h2><?= data_h($conosciGuidoTitolo !== "" ? $conosciGuidoTitolo : "Conosci Guido?") ?></h2>
@@ -165,7 +165,7 @@ if ($rassegna || $rassegnaVuoto !== "") {
 <?php } ?>
 
 <?php if (!empty($site["homeCtaTitolo"]) || !empty($site["homeCtaTesto"])) { ?>
-  <section class="cta-band reveal">
+  <section class="section home-cta reveal">
     <?php if (!empty($site["homeCtaTitolo"])) { ?>
       <h2><?= data_h($site["homeCtaTitolo"]) ?></h2>
     <?php } ?>
