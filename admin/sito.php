@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         "associazioneTitolo", "associazione",
         "ispirazioneTitolo", "ispirazione",
         "conosciGuidoTitolo", "conosciGuido",
+        "chiSiamoTitolo", "chiSiamoLead", "chiSiamoAnteprima",
         "attivitaTitolo", "attivitaLead",
         "bachecaTitolo", "bachecaLead",
         "contattiTitolo", "contattiLead",
@@ -140,17 +141,16 @@ ob_start();
   <label class="admin-field"><span>Home CTA titolo</span><input type="text" name="homeCtaTitolo" value="<?= admin_h($site["homeCtaTitolo"] ?? "") ?>"></label>
   <label class="admin-field"><span>Home CTA testo</span><textarea name="homeCtaTesto"><?= admin_h($site["homeCtaTesto"] ?? "") ?></textarea></label>
 
-  <p class="admin-lead">L’associazione (home)</p>
-  <label class="admin-field"><span>Titolo</span><input type="text" name="associazioneTitolo" value="<?= admin_h($site["associazioneTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Testo</span><textarea name="associazione"><?= admin_h($site["associazione"] ?? "") ?></textarea></label>
-
-  <p class="admin-lead">Ispirazione (home)</p>
-  <label class="admin-field"><span>Titolo</span><input type="text" name="ispirazioneTitolo" value="<?= admin_h($site["ispirazioneTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Testo</span><textarea name="ispirazione"><?= admin_h($site["ispirazione"] ?? "") ?></textarea></label>
-
-  <p class="admin-lead">Conosci Guido? (home)</p>
-  <label class="admin-field"><span>Titolo</span><input type="text" name="conosciGuidoTitolo" value="<?= admin_h($site["conosciGuidoTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Testo</span><textarea name="conosciGuido"><?= admin_h($site["conosciGuido"] ?? "") ?></textarea></label>
+  <p class="admin-lead">Chi siamo</p>
+  <label class="admin-field"><span>Titolo pagina</span><input type="text" name="chiSiamoTitolo" value="<?= admin_h($site["chiSiamoTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Sottotitolo pagina</span><input type="text" name="chiSiamoLead" value="<?= admin_h($site["chiSiamoLead"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Anteprima home</span><textarea name="chiSiamoAnteprima"><?= admin_h($site["chiSiamoAnteprima"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>L’associazione — titolo</span><input type="text" name="associazioneTitolo" value="<?= admin_h($site["associazioneTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>L’associazione — testo</span><textarea name="associazione"><?= admin_h($site["associazione"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Ispirazione — titolo</span><input type="text" name="ispirazioneTitolo" value="<?= admin_h($site["ispirazioneTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Ispirazione — testo</span><textarea name="ispirazione"><?= admin_h($site["ispirazione"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Conosci Guido? — titolo</span><input type="text" name="conosciGuidoTitolo" value="<?= admin_h($site["conosciGuidoTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Conosci Guido? — testo</span><textarea name="conosciGuido"><?= admin_h($site["conosciGuido"] ?? "") ?></textarea></label>
 
   <p class="admin-lead">Rassegna stampa (home)</p>
   <label class="admin-field"><span>Rassegna titolo</span><input type="text" name="rassegnaTitolo" value="<?= admin_h($site["rassegnaTitolo"] ?? "") ?>"></label>

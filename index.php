@@ -43,59 +43,20 @@ site_header("home", $name, $site["tagline"] ?? "");
 </section>
 
 <?php
-$associazioneTitolo = trim((string) ($site["associazioneTitolo"] ?? ""));
-$associazione = trim((string) ($site["associazione"] ?? ""));
-if ($associazioneTitolo !== "" || $associazione !== "") {
+$chiSiamoTitolo = trim((string) ($site["chiSiamoTitolo"] ?? "")) ?: "Chi siamo";
+$chiSiamoPreview = trim((string) ($site["chiSiamoAnteprima"] ?? ""));
+if ($chiSiamoPreview !== "") {
 ?>
   <section class="section panel panel--orchid reveal">
     <div class="section__head">
       <div>
-        <h2><?= data_h($associazioneTitolo !== "" ? $associazioneTitolo : "L’associazione") ?></h2>
+        <h2><?= data_h($chiSiamoTitolo) ?></h2>
       </div>
     </div>
-    <?php if ($associazione !== "") { ?>
-      <div class="prose">
-        <?= data_nl2p($associazione) ?>
-      </div>
-    <?php } ?>
-  </section>
-<?php } ?>
-
-<?php
-$ispirazioneTitolo = trim((string) ($site["ispirazioneTitolo"] ?? ""));
-$ispirazione = trim((string) ($site["ispirazione"] ?? ""));
-if ($ispirazioneTitolo !== "" || $ispirazione !== "") {
-?>
-  <section class="section panel panel--green reveal">
-    <div class="section__head">
-      <div>
-        <h2><?= data_h($ispirazioneTitolo !== "" ? $ispirazioneTitolo : "Ispirazione") ?></h2>
-      </div>
+    <div class="prose">
+      <?= data_nl2p($chiSiamoPreview) ?>
+      <p><a class="btn" href="<?= data_h(site_asset("chi-siamo")) ?>">Continua a leggere</a></p>
     </div>
-    <?php if ($ispirazione !== "") { ?>
-      <div class="prose">
-        <?= data_nl2p($ispirazione) ?>
-      </div>
-    <?php } ?>
-  </section>
-<?php } ?>
-
-<?php
-$conosciGuidoTitolo = trim((string) ($site["conosciGuidoTitolo"] ?? ""));
-$conosciGuido = trim((string) ($site["conosciGuido"] ?? ""));
-if ($conosciGuidoTitolo !== "" || $conosciGuido !== "") {
-?>
-  <section class="section panel panel--violet reveal">
-    <div class="section__head">
-      <div>
-        <h2><?= data_h($conosciGuidoTitolo !== "" ? $conosciGuidoTitolo : "Conosci Guido?") ?></h2>
-      </div>
-    </div>
-    <?php if ($conosciGuido !== "") { ?>
-      <div class="prose">
-        <?= data_nl2p($conosciGuido) ?>
-      </div>
-    <?php } ?>
   </section>
 <?php } ?>
 

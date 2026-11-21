@@ -16,7 +16,7 @@ ob_start();
   <a class="admin-card" href="sito.php">
     <div>
       <h2>Testi e contatti</h2>
-      <p>Home, contatti, social, 5×1000, documenti</p>
+      <p>Chi siamo, home, contatti, social, 5×1000, documenti</p>
     </div>
     <span class="admin-count">pagina</span>
   </a>
