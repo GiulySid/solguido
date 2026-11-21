@@ -8,11 +8,6 @@ require __DIR__ . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "layo
 $site = data_site();
 $name = $site["nome"] ?? "SolGuido";
 $upcoming = data_attivita_upcoming(3);
-$about = trim((string) ($site["chiSiamo"] ?? ""));
-$aboutPreview = $about;
-if (data_strlen($aboutPreview) > 280) {
-    $aboutPreview = (function_exists("mb_substr") ? mb_substr($aboutPreview, 0, 280) : substr($aboutPreview, 0, 280)) . "…";
-}
 
 $heroImages = [
     "img/placeholders/home-bg-1.svg",
@@ -38,7 +33,7 @@ site_header("home", $name, $site["tagline"] ?? "");
     <h1><?= data_h($site["tagline"]) ?></h1>
   <?php } ?>
   <?php if (!empty($site["heroLead"])) { ?>
-    <p><?= data_h($site["heroLead"]) ?></p>
+    <p><?= nl2br(data_h($site["heroLead"])) ?></p>
   <?php } ?>
   <div class="hero__cta">
     <a class="btn" href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Contatti") ?></a>
@@ -46,6 +41,63 @@ site_header("home", $name, $site["tagline"] ?? "");
     <a class="btn-ghost" href="<?= data_h(site_asset("bacheca")) ?>"><?= data_h($site["bachecaTitolo"] ?: "Ricordi") ?></a>
   </div>
 </section>
+
+<?php
+$associazioneTitolo = trim((string) ($site["associazioneTitolo"] ?? ""));
+$associazione = trim((string) ($site["associazione"] ?? ""));
+if ($associazioneTitolo !== "" || $associazione !== "") {
+?>
+  <section class="section reveal">
+    <div class="section__head">
+      <div>
+        <h2><?= data_h($associazioneTitolo !== "" ? $associazioneTitolo : "L’associazione") ?></h2>
+      </div>
+    </div>
+    <?php if ($associazione !== "") { ?>
+      <div class="prose">
+        <?= data_nl2p($associazione) ?>
+      </div>
+    <?php } ?>
+  </section>
+<?php } ?>
+
+<?php
+$ispirazioneTitolo = trim((string) ($site["ispirazioneTitolo"] ?? ""));
+$ispirazione = trim((string) ($site["ispirazione"] ?? ""));
+if ($ispirazioneTitolo !== "" || $ispirazione !== "") {
+?>
+  <section class="section reveal">
+    <div class="section__head">
+      <div>
+        <h2><?= data_h($ispirazioneTitolo !== "" ? $ispirazioneTitolo : "Ispirazione") ?></h2>
+      </div>
+    </div>
+    <?php if ($ispirazione !== "") { ?>
+      <div class="prose">
+        <?= data_nl2p($ispirazione) ?>
+      </div>
+    <?php } ?>
+  </section>
+<?php } ?>
+
+<?php
+$conosciGuidoTitolo = trim((string) ($site["conosciGuidoTitolo"] ?? ""));
+$conosciGuido = trim((string) ($site["conosciGuido"] ?? ""));
+if ($conosciGuidoTitolo !== "" || $conosciGuido !== "") {
+?>
+  <section class="section reveal">
+    <div class="section__head">
+      <div>
+        <h2><?= data_h($conosciGuidoTitolo !== "" ? $conosciGuidoTitolo : "Conosci Guido?") ?></h2>
+      </div>
+    </div>
+    <?php if ($conosciGuido !== "") { ?>
+      <div class="prose">
+        <?= data_nl2p($conosciGuido) ?>
+      </div>
+    <?php } ?>
+  </section>
+<?php } ?>
 
 <?php if ($upcoming) { ?>
   <section class="section reveal">
@@ -76,17 +128,39 @@ site_header("home", $name, $site["tagline"] ?? "");
   </section>
 <?php } ?>
 
-<?php if ($aboutPreview !== "") { ?>
+<?php
+$rassegna = is_array($site["rassegnaStampa"] ?? null) ? $site["rassegnaStampa"] : [];
+$rassegnaTitolo = trim((string) ($site["rassegnaTitolo"] ?? "")) ?: "Rassegna stampa";
+$rassegnaVuoto = trim((string) ($site["rassegnaVuoto"] ?? ""));
+if ($rassegna || $rassegnaVuoto !== "") {
+?>
   <section class="section reveal">
     <div class="section__head">
       <div>
-        <h2><?= data_h($site["chiSiamoTitolo"] ?: "Chi siamo") ?></h2>
+        <h2><?= data_h($rassegnaTitolo) ?></h2>
       </div>
     </div>
-    <div class="prose">
-      <p><?= nl2br(data_h($aboutPreview)) ?></p>
-      <p><a class="btn-ghost" href="<?= data_h(site_asset("chi-siamo")) ?>">Leggi di più</a></p>
-    </div>
+    <?php if (!$rassegna) { ?>
+      <p class="prose"><?= data_h($rassegnaVuoto) ?></p>
+    <?php } else { ?>
+      <ul class="link-list">
+        <?php foreach ($rassegna as $item) {
+            $label = trim((string) ($item["label"] ?? $item["titolo"] ?? ""));
+            $url = trim((string) ($item["url"] ?? ""));
+            if ($label === "") {
+                continue;
+            }
+            ?>
+          <li>
+            <?php if ($url !== "") { ?>
+              <a href="<?= data_h($url) ?>" target="_blank" rel="noopener noreferrer"><?= data_h($label) ?></a>
+            <?php } else { ?>
+              <?= data_h($label) ?>
+            <?php } ?>
+          </li>
+        <?php } ?>
+      </ul>
+    <?php } ?>
   </section>
 <?php } ?>
 

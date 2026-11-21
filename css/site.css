@@ -435,6 +435,18 @@ body[data-page="home"] .site-main > :not(.hero) {
 
 .prose p { color: var(--muted); }
 
+.prose ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.55rem;
+  color: var(--muted);
+}
+
+.prose li {
+  padding-left: 0.15rem;
+}
+
 .seg-control {
   display: inline-flex;
   flex-wrap: wrap;
@@ -739,22 +751,30 @@ body[data-page="home"] .site-main > :not(.hero) {
   overflow: auto;
 }
 
+.chat-empty {
+  margin: 0;
+  padding: 0.75rem 0.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
 .chat-bubble {
   max-width: min(85%, 28rem);
   padding: 0.55rem 0.75rem 0.65rem;
   border-radius: var(--radius);
-  background: var(--bubble-user);
 }
 
-.chat-bubble--user {
-  justify-self: end;
-  border-bottom-right-radius: 0.2rem;
-}
-
-.chat-bubble--guido {
+.chat-bubble--left {
   justify-self: start;
   background: var(--bubble-guido);
   border-bottom-left-radius: 0.2rem;
+}
+
+.chat-bubble--right {
+  justify-self: end;
+  background: var(--bubble-user);
+  border-bottom-right-radius: 0.2rem;
 }
 
 .chat-bubble__meta {

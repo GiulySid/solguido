@@ -27,9 +27,6 @@ if (!function_exists("admin_bacheca_block")) {
                 echo '<img class="admin-thumb" src="' . admin_h(site_asset($img)) . '" alt="" style="margin-bottom:0.5rem">';
             }
             echo "<h2>" . admin_h($post["autore"] ?? "-");
-            if (!empty($post["fromGuido"])) {
-                echo '<span class="admin-badge">Guido</span>';
-            }
             echo '<span class="admin-badge ' . $badgeClass . '">' . admin_h(BACHECA_STATUS[$status] ?? $status) . "</span></h2>";
             echo "<p>" . admin_h(data_format_datetime($post["createdAt"] ?? "")) . "</p>";
             if (trim((string) ($post["testo"] ?? "")) !== "") {
@@ -57,19 +54,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $action = (string) ($_POST["action"] ?? "");
     $posts = data_bacheca_posts(null);
 
-    if ($action === "guido_post") {
+    if ($action === "publish_post") {
         $testo = trim((string) ($_POST["testo"] ?? ""));
-        $autore = trim((string) ($_POST["autore"] ?? "Guido"));
+        $autore = trim((string) ($_POST["autore"] ?? ""));
         if ($autore === "") {
-            $autore = "Guido";
-        }
-        if ($testo === "") {
+            $error = "Indica un nome.";
+        } elseif ($testo === "") {
             $error = "Scrivi un messaggio.";
         } else {
             $imageRel = "";
             $thumbRel = "";
             if (!empty($_FILES["immagine"]) && (int) ($_FILES["immagine"]["error"] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
-                $basename = "guido-" . date("Ymd-His") . "-" . substr(bin2hex(random_bytes(3)), 0, 6);
+                $basename = "msg-" . date("Ymd-His") . "-" . substr(bin2hex(random_bytes(3)), 0, 6);
                 [$stored, $imgError] = admin_store_upload($_FILES["immagine"], "media/bacheca", $basename);
                 if ($imgError) {
                     $error = $imgError;
@@ -80,19 +76,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
             if ($error === "") {
                 $posts[] = [
-                    "id" => data_new_id("guido"),
+                    "id" => data_new_id("bacheca"),
                     "autore" => $autore,
-                    "testo" => data_ensure_guido_firma($testo),
+                    "testo" => $testo,
                     "immagine" => $imageRel,
                     "immagineThumb" => $thumbRel,
                     "createdAt" => date("c"),
                     "status" => "approved",
-                    "fromGuido" => true,
+                    "fromGuido" => false,
                 ];
                 if (!data_write("bacheca", ["posts" => array_values($posts)])) {
                     $error = "Impossibile salvare il post.";
                 } else {
-                    admin_flash("success", "Messaggio di Guido pubblicato.");
+                    admin_flash("success", "Messaggio pubblicato.");
                     header("Location: bacheca.php");
                     exit;
                 }
@@ -159,17 +155,17 @@ ob_start();
 <?= admin_bacheca_block("In attesa di approvazione", $pending, ["approve" => "Approva", "hide" => "Nascondi", "delete" => "Elimina"]) ?>
 
 <section class="admin-section">
-  <h2 style="font-family:var(--display);font-size:1.35rem;margin-bottom:0.75rem">Scrivi come Guido</h2>
+  <h2 style="font-family:var(--display);font-size:1.35rem;margin-bottom:0.75rem">Pubblica un messaggio</h2>
   <form class="admin-form" method="post" enctype="multipart/form-data">
     <?= admin_csrf_field() ?>
-    <input type="hidden" name="action" value="guido_post">
+    <input type="hidden" name="action" value="publish_post">
     <label class="admin-field">
-      <span>Nome visualizzato</span>
-      <input type="text" name="autore" value="Guido">
+      <span>Nome</span>
+      <input type="text" name="autore" required value="<?= admin_h($_POST["autore"] ?? "") ?>">
     </label>
     <label class="admin-field">
       <span>Messaggio</span>
-      <textarea name="testo" required placeholder="Ciao…"><?= admin_h($_POST["testo"] ?? "") ?></textarea>
+      <textarea name="testo" required placeholder="Scrivi un messaggio…"><?= admin_h($_POST["testo"] ?? "") ?></textarea>
     </label>
     <label class="admin-field">
       <span>Immagine (opzionale)</span>

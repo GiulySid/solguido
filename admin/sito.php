@@ -40,8 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     admin_csrf_check();
     $fields = [
         "nome", "nomeLegale", "tagline", "heroLead",
-        "chiSiamoTitolo", "chiSiamoLead", "chiSiamo",
-        "cosaFacciamoTitolo", "cosaFacciamoLead", "cosaFacciamo",
+        "associazioneTitolo", "associazione",
+        "ispirazioneTitolo", "ispirazione",
+        "conosciGuidoTitolo", "conosciGuido",
         "attivitaTitolo", "attivitaLead",
         "bachecaTitolo", "bachecaLead",
         "contattiTitolo", "contattiLead",
@@ -139,18 +140,24 @@ ob_start();
   <label class="admin-field"><span>Home CTA titolo</span><input type="text" name="homeCtaTitolo" value="<?= admin_h($site["homeCtaTitolo"] ?? "") ?>"></label>
   <label class="admin-field"><span>Home CTA testo</span><textarea name="homeCtaTesto"><?= admin_h($site["homeCtaTesto"] ?? "") ?></textarea></label>
 
-  <p class="admin-lead">Chi siamo</p>
-  <label class="admin-field"><span>Titolo</span><input type="text" name="chiSiamoTitolo" value="<?= admin_h($site["chiSiamoTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Sottotitolo</span><input type="text" name="chiSiamoLead" value="<?= admin_h($site["chiSiamoLead"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Testo</span><textarea name="chiSiamo"><?= admin_h($site["chiSiamo"]) ?></textarea></label>
+  <p class="admin-lead">L’associazione (home)</p>
+  <label class="admin-field"><span>Titolo</span><input type="text" name="associazioneTitolo" value="<?= admin_h($site["associazioneTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Testo</span><textarea name="associazione"><?= admin_h($site["associazione"] ?? "") ?></textarea></label>
+
+  <p class="admin-lead">Ispirazione (home)</p>
+  <label class="admin-field"><span>Titolo</span><input type="text" name="ispirazioneTitolo" value="<?= admin_h($site["ispirazioneTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Testo</span><textarea name="ispirazione"><?= admin_h($site["ispirazione"] ?? "") ?></textarea></label>
+
+  <p class="admin-lead">Conosci Guido? (home)</p>
+  <label class="admin-field"><span>Titolo</span><input type="text" name="conosciGuidoTitolo" value="<?= admin_h($site["conosciGuidoTitolo"] ?? "") ?>"></label>
+  <label class="admin-field"><span>Testo</span><textarea name="conosciGuido"><?= admin_h($site["conosciGuido"] ?? "") ?></textarea></label>
+
+  <p class="admin-lead">Rassegna stampa (home)</p>
   <label class="admin-field"><span>Rassegna titolo</span><input type="text" name="rassegnaTitolo" value="<?= admin_h($site["rassegnaTitolo"] ?? "") ?>"></label>
   <label class="admin-field"><span>Rassegna testo vuoto</span><input type="text" name="rassegnaVuoto" value="<?= admin_h($site["rassegnaVuoto"] ?? "") ?>"></label>
   <label class="admin-field"><span>Rassegna stampa (Titolo | URL)</span><textarea name="rassegnaStampa"><?= admin_h(implode("\n", $rassegnaLines)) ?></textarea></label>
 
-  <p class="admin-lead">Cosa facciamo / Eventi / Ricordi</p>
-  <label class="admin-field"><span>Cosa facciamo titolo</span><input type="text" name="cosaFacciamoTitolo" value="<?= admin_h($site["cosaFacciamoTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Cosa facciamo sottotitolo</span><input type="text" name="cosaFacciamoLead" value="<?= admin_h($site["cosaFacciamoLead"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Cosa facciamo testo</span><textarea name="cosaFacciamo"><?= admin_h($site["cosaFacciamo"]) ?></textarea></label>
+  <p class="admin-lead">Eventi / Ricordi</p>
   <label class="admin-field"><span>Eventi titolo</span><input type="text" name="attivitaTitolo" value="<?= admin_h($site["attivitaTitolo"] ?? "") ?>"></label>
   <label class="admin-field"><span>Eventi sottotitolo</span><input type="text" name="attivitaLead" value="<?= admin_h($site["attivitaLead"] ?? "") ?>"></label>
   <label class="admin-field"><span>Ricordi titolo</span><input type="text" name="bachecaTitolo" value="<?= admin_h($site["bachecaTitolo"] ?? "") ?>"></label>
@@ -178,7 +185,7 @@ ob_start();
   <label class="admin-field"><span>Facebook</span><input type="url" name="facebook" value="<?= admin_h($site["facebook"]) ?>"></label>
   <label class="admin-field"><span>Link atto costitutivo</span><input type="text" name="docAtto" value="<?= admin_h($docAtto) ?>"></label>
   <label class="admin-field"><span>Link statuto</span><input type="text" name="docStatuto" value="<?= admin_h($docStatuto) ?>"></label>
-  <label class="admin-field"><span>Firma Guido (bacheca)</span><input type="text" name="firmaGuido" value="<?= admin_h($site["firmaGuido"]) ?>"></label>
+  <label class="admin-field"><span>Emoji in descrizione Ricordi</span><input type="text" name="firmaGuido" value="<?= admin_h($site["firmaGuido"]) ?>"></label>
 
   <div class="admin-actions">
     <button class="admin-btn" type="submit">Salva</button>

@@ -4,8 +4,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . "data.php";
 
 function site_public_pages() {
     return [
-        "chi-siamo" => "chi-siamo.php",
-        "cosa-facciamo" => "cosa-facciamo.php",
         "attivita" => "attivita.php",
         "attivita-dettaglio" => "attivita-dettaglio.php",
         "sostienici" => "sostienici.php",

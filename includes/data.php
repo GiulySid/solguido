@@ -64,12 +64,12 @@ function data_default($name) {
                 "nomeLegale" => "",
                 "tagline" => "",
                 "heroLead" => "",
-                "chiSiamoTitolo" => "Chi siamo",
-                "chiSiamoLead" => "",
-                "chiSiamo" => "",
-                "cosaFacciamoTitolo" => "Cosa facciamo",
-                "cosaFacciamoLead" => "",
-                "cosaFacciamo" => "",
+                "associazioneTitolo" => "L’associazione",
+                "associazione" => "",
+                "ispirazioneTitolo" => "Ispirazione",
+                "ispirazione" => "",
+                "conosciGuidoTitolo" => "Conosci Guido?",
+                "conosciGuido" => "",
                 "attivitaTitolo" => "Prossimi eventi",
                 "attivitaLead" => "",
                 "bachecaTitolo" => "Condividi i tuoi ricordi",
@@ -360,7 +360,31 @@ function data_nl2p($text) {
     $parts = preg_split("/\R{2,}/", $text) ?: [];
     $html = "";
     foreach ($parts as $part) {
-        $html .= "<p>" . nl2br(data_h(trim($part))) . "</p>";
+        $part = trim($part);
+        if ($part === "") {
+            continue;
+        }
+        $lines = preg_split("/\R/", $part) ?: [];
+        $isList = count($lines) > 0;
+        foreach ($lines as $line) {
+            if (!preg_match('/^\s*[-•]\s+/u', $line)) {
+                $isList = false;
+                break;
+            }
+        }
+        if ($isList) {
+            $html .= "<ul>";
+            foreach ($lines as $line) {
+                $item = trim(preg_replace('/^\s*[-•]\s+/u', "", $line));
+                if ($item === "") {
+                    continue;
+                }
+                $html .= "<li>" . data_h($item) . "</li>";
+            }
+            $html .= "</ul>";
+            continue;
+        }
+        $html .= "<p>" . nl2br(data_h($part)) . "</p>";
     }
     return $html;
 }

@@ -81,12 +81,14 @@ $wallpaper = site_asset("img/placeholders/bacheca-wallpaper.jpg");
 $site = data_site();
 $titolo = trim((string) ($site["bachecaTitolo"] ?? "")) ?: "Bacheca";
 $lead = trim((string) ($site["bachecaLead"] ?? ""));
-site_header("bacheca", $titolo, $lead !== "" ? $lead : $titolo);
+$emoji = data_firma_guido();
+$leadFull = trim($lead . ($emoji !== "" ? ($lead !== "" ? " " : "") . $emoji : ""));
+site_header("bacheca", $titolo, $leadFull !== "" ? $leadFull : $titolo);
 ?>
 <header class="page-head reveal">
   <h1><?= data_h($titolo) ?></h1>
-  <?php if ($lead !== "") { ?>
-    <p><?= data_h($lead) ?></p>
+  <?php if ($leadFull !== "") { ?>
+    <p><?= data_h($leadFull) ?></p>
   <?php } ?>
 </header>
 
@@ -94,21 +96,16 @@ site_header("bacheca", $titolo, $lead !== "" ? $lead : $titolo);
   <div class="chat-shell" style="--chat-wallpaper: url('<?= data_h($wallpaper) ?>')">
     <div class="chat-thread" data-chat-thread>
       <?php if (!$posts) { ?>
-        <div class="chat-bubble chat-bubble--guido">
-          <div class="chat-bubble__meta"><span>Guido</span><span>presto</span></div>
-          <div class="chat-bubble__text">Ancora nessun messaggio pubblico. Scrivi tu il primo pensiero.
-
-<?= data_h(data_firma_guido()) ?></div>
-        </div>
+        <p class="chat-empty">Ancora nessun messaggio pubblico. Scrivi tu il primo pensiero.</p>
       <?php } ?>
-      <?php foreach ($posts as $post) {
-          $isGuido = !empty($post["fromGuido"]);
+      <?php foreach ($posts as $i => $post) {
+          $side = ($i % 2 === 0) ? "left" : "right";
           $img = data_asset($post["immagineThumb"] ?: ($post["immagine"] ?? ""));
           $full = data_asset($post["immagine"] ?? "");
           ?>
-        <article class="chat-bubble <?= $isGuido ? "chat-bubble--guido" : "chat-bubble--user" ?>">
+        <article class="chat-bubble chat-bubble--<?= $side ?>">
           <div class="chat-bubble__meta">
-            <span><?= data_h($post["autore"] ?? ($isGuido ? "Guido" : "Amico")) ?></span>
+            <span><?= data_h($post["autore"] ?? "Amico") ?></span>
             <span><?= data_h(data_format_datetime($post["createdAt"] ?? "")) ?></span>
           </div>
           <?php if ($img !== "") { ?>

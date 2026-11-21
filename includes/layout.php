@@ -4,8 +4,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . "data.php";
 
 function site_nav_items() {
     return [
-        "chi-siamo" => ["label" => "Chi siamo", "href" => site_asset("chi-siamo")],
-        "cosa-facciamo" => ["label" => "Cosa facciamo", "href" => site_asset("cosa-facciamo")],
+        "home" => ["label" => "Home", "href" => site_asset("")],
         "attivita" => ["label" => "Eventi", "href" => site_asset("attivita")],
         "bacheca" => ["label" => "Ricordi", "href" => site_asset("bacheca")],
         "sostienici" => ["label" => "Sostienici", "href" => site_asset("sostienici")],
