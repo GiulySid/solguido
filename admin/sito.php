@@ -36,6 +36,17 @@ function admin_parse_simple_lines($raw) {
     return $out;
 }
 
+$richFields = [
+    "heroLead",
+    "homeCtaTesto",
+    "chiSiamoAnteprima",
+    "associazione",
+    "ispirazione",
+    "conosciGuido",
+    "testoDonazione",
+    "testo5x1000",
+];
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     admin_csrf_check();
     $fields = [
@@ -53,8 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         "email", "pec", "telefono", "sede", "iban",
         "instagram", "facebook", "codiceFiscale", "testo5x1000", "firmaGuido",
     ];
+    $richLookup = array_fill_keys($richFields, true);
     foreach ($fields as $field) {
-        $site[$field] = trim((string) ($_POST[$field] ?? ""));
+        $raw = (string) ($_POST[$field] ?? "");
+        if (isset($richLookup[$field])) {
+            $site[$field] = data_sanitize_html($raw);
+        } else {
+            $site[$field] = trim($raw);
+        }
     }
 
     $site["quoteSocio"] = admin_parse_lines_label_detail($_POST["quoteSocio"] ?? "");
@@ -137,20 +154,20 @@ ob_start();
   <label class="admin-field"><span>Nome brand</span><input type="text" name="nome" required value="<?= admin_h($site["nome"]) ?>"></label>
   <label class="admin-field"><span>Nome legale</span><input type="text" name="nomeLegale" value="<?= admin_h($site["nomeLegale"] ?? "") ?>"></label>
   <label class="admin-field"><span>Tagline</span><input type="text" name="tagline" value="<?= admin_h($site["tagline"]) ?>"></label>
-  <label class="admin-field"><span>Hero (testo sotto la tagline)</span><textarea name="heroLead"><?= admin_h($site["heroLead"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Hero (testo sotto la tagline)</span><textarea name="heroLead" data-richtext><?= admin_h($site["heroLead"] ?? "") ?></textarea></label>
   <label class="admin-field"><span>Home CTA titolo</span><input type="text" name="homeCtaTitolo" value="<?= admin_h($site["homeCtaTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Home CTA testo</span><textarea name="homeCtaTesto"><?= admin_h($site["homeCtaTesto"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Home CTA testo</span><textarea name="homeCtaTesto" data-richtext><?= admin_h($site["homeCtaTesto"] ?? "") ?></textarea></label>
 
   <p class="admin-lead">Chi siamo</p>
   <label class="admin-field"><span>Titolo pagina</span><input type="text" name="chiSiamoTitolo" value="<?= admin_h($site["chiSiamoTitolo"] ?? "") ?>"></label>
   <label class="admin-field"><span>Sottotitolo pagina</span><input type="text" name="chiSiamoLead" value="<?= admin_h($site["chiSiamoLead"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Anteprima home</span><textarea name="chiSiamoAnteprima"><?= admin_h($site["chiSiamoAnteprima"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Anteprima home</span><textarea name="chiSiamoAnteprima" data-richtext><?= admin_h($site["chiSiamoAnteprima"] ?? "") ?></textarea></label>
   <label class="admin-field"><span>L’associazione — titolo</span><input type="text" name="associazioneTitolo" value="<?= admin_h($site["associazioneTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>L’associazione — testo</span><textarea name="associazione"><?= admin_h($site["associazione"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>L’associazione — testo</span><textarea name="associazione" data-richtext><?= admin_h($site["associazione"] ?? "") ?></textarea></label>
   <label class="admin-field"><span>Ispirazione — titolo</span><input type="text" name="ispirazioneTitolo" value="<?= admin_h($site["ispirazioneTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Ispirazione — testo</span><textarea name="ispirazione"><?= admin_h($site["ispirazione"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Ispirazione — testo</span><textarea name="ispirazione" data-richtext><?= admin_h($site["ispirazione"] ?? "") ?></textarea></label>
   <label class="admin-field"><span>Conosci Guido? — titolo</span><input type="text" name="conosciGuidoTitolo" value="<?= admin_h($site["conosciGuidoTitolo"] ?? "") ?>"></label>
-  <label class="admin-field"><span>Conosci Guido? — testo</span><textarea name="conosciGuido"><?= admin_h($site["conosciGuido"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Conosci Guido? — testo</span><textarea name="conosciGuido" data-richtext><?= admin_h($site["conosciGuido"] ?? "") ?></textarea></label>
 
   <p class="admin-lead">Rassegna stampa (home)</p>
   <label class="admin-field"><span>Rassegna titolo</span><input type="text" name="rassegnaTitolo" value="<?= admin_h($site["rassegnaTitolo"] ?? "") ?>"></label>
@@ -169,8 +186,8 @@ ob_start();
   <label class="admin-field"><span>Intro quote socio</span><input type="text" name="sostieniciSocioIntro" value="<?= admin_h($site["sostieniciSocioIntro"] ?? "") ?>"></label>
   <label class="admin-field"><span>Quote socio (Nome | dettaglio)</span><textarea name="quoteSocio"><?= admin_h(implode("\n", $quoteLines)) ?></textarea></label>
   <label class="admin-field"><span>Altri modi (una riga ciascuno)</span><textarea name="modiSostegno"><?= admin_h(implode("\n", $modiLines)) ?></textarea></label>
-  <label class="admin-field"><span>Testo donazione (sotto IBAN)</span><textarea name="testoDonazione"><?= admin_h($site["testoDonazione"] ?? "") ?></textarea></label>
-  <label class="admin-field"><span>Testo 5×1000</span><textarea name="testo5x1000"><?= admin_h($site["testo5x1000"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Testo donazione (sotto IBAN)</span><textarea name="testoDonazione" data-richtext><?= admin_h($site["testoDonazione"] ?? "") ?></textarea></label>
+  <label class="admin-field"><span>Testo 5×1000</span><textarea name="testo5x1000" data-richtext><?= admin_h($site["testo5x1000"] ?? "") ?></textarea></label>
 
   <p class="admin-lead">Contatti e documenti</p>
   <label class="admin-field"><span>Contatti titolo</span><input type="text" name="contattiTitolo" value="<?= admin_h($site["contattiTitolo"] ?? "") ?>"></label>
@@ -192,4 +209,4 @@ ob_start();
   </div>
 </form>
 <?php
-admin_layout("Sito", ob_get_clean(), ["nav" => true]);
+admin_layout("Sito", ob_get_clean(), ["nav" => true, "wide" => true]);

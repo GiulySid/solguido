@@ -82,12 +82,7 @@ site_header("contatti", $titolo, $lead !== "" ? $lead : $titolo);
     <?php if (!empty($site["telefono"])) { ?>
       <a href="tel:<?= data_h(preg_replace('/\s+/', '', (string) $site["telefono"])) ?>">Tel: <?= data_h($site["telefono"]) ?></a>
     <?php } ?>
-    <?php if (!empty($site["instagram"])) { ?>
-      <a href="<?= data_h($site["instagram"]) ?>" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <?php } ?>
-    <?php if (!empty($site["facebook"])) { ?>
-      <a href="<?= data_h($site["facebook"]) ?>" target="_blank" rel="noopener noreferrer">Facebook</a>
-    <?php } ?>
+    <?= site_social_links("inline") ?>
 
     <?php
     $docsConUrl = array_values(array_filter($documenti, static function ($doc) {
@@ -96,8 +91,15 @@ site_header("contatti", $titolo, $lead !== "" ? $lead : $titolo);
     ?>
     <?php if ($docsConUrl) { ?>
       <h2 style="margin-top:1rem">Documenti</h2>
-      <?php foreach ($docsConUrl as $doc) { ?>
-        <a href="<?= data_h($doc["url"]) ?>" target="_blank" rel="noopener noreferrer"><?= data_h($doc["label"] ?? "Documento") ?></a>
+      <?php foreach ($docsConUrl as $doc) {
+          $label = trim((string) ($doc["label"] ?? "Documento"));
+          $url = trim((string) ($doc["url"] ?? ""));
+          if ($url !== "" && !preg_match('#^(https?:)?//#i', $url)) {
+              $url = site_asset(ltrim($url, "/"));
+          }
+          $downloadName = data_slugify($label) . ".pdf";
+          ?>
+        <a href="<?= data_h($url) ?>" download="<?= data_h($downloadName) ?>" target="_blank" rel="noopener noreferrer"><?= data_h($label) ?> (PDF)</a>
       <?php } ?>
     <?php } else { ?>
       <p style="margin-top:0.75rem;color:var(--muted)">Atto costitutivo e statuto: in arrivo.</p>

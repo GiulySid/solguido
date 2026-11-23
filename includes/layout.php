@@ -13,6 +13,36 @@ function site_nav_items() {
     ];
 }
 
+function site_social_icon_svg($network) {
+    if ($network === "instagram") {
+        return '<svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.7.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9C2.4 3.9 4 2.3 7.1 2.2 8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.2 0-3.5 0-4.8.1-2.2.1-3.3 1.2-3.4 3.4-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 2.2 1.2 3.3 3.4 3.4 1.2.1 1.6.1 4.8.1s3.5 0 4.7-.1c2.2-.1 3.3-1.2 3.4-3.4.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-2.2-1.2-3.3-3.4-3.4-1.2-.1-1.5-.1-4.7-.1m0 3.2a5.4 5.4 0 1 1 0 10.8 5.4 5.4 0 0 1 0-10.8m0 1.8a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2m5.7-2.9a1.26 1.26 0 1 1-2.52 0 1.26 1.26 0 0 1 2.52 0"/></svg>';
+    }
+    if ($network === "facebook") {
+        return '<svg class="social-icon social-icon--facebook" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M14.5 8.25h2.75V5.5H14.5c-2.35 0-4.25 1.9-4.25 4.25v1.75H7.5v2.75h2.75V19.5h2.75v-5.25h2.85l.65-2.75h-3.5V9.75c0-.55.35-1 .85-1z"/></svg>';
+    }
+    return "";
+}
+
+function site_social_links($modifier = "") {
+    $site = data_site();
+    $networks = [
+        "instagram" => ["label" => "Instagram", "url" => trim((string) ($site["instagram"] ?? ""))],
+        "facebook" => ["label" => "Facebook", "url" => trim((string) ($site["facebook"] ?? ""))],
+    ];
+    $links = [];
+    foreach ($networks as $key => $item) {
+        if ($item["url"] === "") {
+            continue;
+        }
+        $links[] = '<a class="social-link social-link--' . data_h($key) . '" href="' . data_h($item["url"]) . '" target="_blank" rel="noopener noreferrer" aria-label="' . data_h($item["label"]) . '">' . site_social_icon_svg($key) . "</a>";
+    }
+    if (!$links) {
+        return "";
+    }
+    $class = "social-links" . ($modifier !== "" ? " social-links--" . $modifier : "");
+    return '<div class="' . data_h($class) . '">' . implode("", $links) . "</div>";
+}
+
 function site_header($current, $title, $description = "", $opts = []) {
     $site = data_site();
     $name = $site["nome"] ?: "SolGuido";
@@ -73,14 +103,16 @@ function site_header($current, $title, $description = "", $opts = []) {
       <img class="brand__logo" src="<?= data_h(site_asset("img/logo.svg")) ?>" alt="<?= data_h($name) ?>" width="220" height="80">
     </a>
     <?php if (empty($opts["hideNav"])) { ?>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <span class="nav-toggle__bars" aria-hidden="true"></span>
-        <span class="nav-toggle__label">Menu</span>
-      </button>
-      <div class="site-nav-desktop" aria-hidden="false">
-        <?php foreach ($nav as $key => $item) { ?>
-          <a href="<?= data_h($item["href"]) ?>"<?= $current === $key ? ' aria-current="page"' : "" ?>><?= data_h($item["label"]) ?></a>
-        <?php } ?>
+      <div class="site-header__tools">
+        <div class="site-nav-desktop" aria-hidden="false">
+          <?php foreach ($nav as $key => $item) { ?>
+            <a href="<?= data_h($item["href"]) ?>"<?= $current === $key ? ' aria-current="page"' : "" ?>><?= data_h($item["label"]) ?></a>
+          <?php } ?>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+          <span class="nav-toggle__label">Menu</span>
+        </button>
       </div>
     <?php } ?>
   </header>
@@ -106,20 +138,8 @@ function site_footer() {
         <?php } ?>
       </div>
       <div class="footer-links">
-        <?php if (!empty($site["email"])) { ?>
-          <a href="mailto:<?= data_h($site["email"]) ?>"><?= data_h($site["email"]) ?></a>
-        <?php } ?>
-        <?php if (!empty($site["telefono"])) { ?>
-          <a href="tel:<?= data_h(preg_replace('/\s+/', '', (string) $site["telefono"])) ?>"><?= data_h($site["telefono"]) ?></a>
-        <?php } ?>
-        <?php if (!empty($site["instagram"])) { ?>
-          <a href="<?= data_h($site["instagram"]) ?>" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <?php } ?>
-        <?php if (!empty($site["facebook"])) { ?>
-          <a href="<?= data_h($site["facebook"]) ?>" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <?php } ?>
-        <a href="<?= data_h(site_asset("contatti")) ?>">Contatti</a>
-        <a href="<?= data_h(site_asset("sostienici")) ?>">5×1000</a>
+        <a href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Scrivici") ?></a>
+        <?= site_social_links("footer") ?>
       </div>
     </div>
     <p class="footer-note">Sol Guido ODV</p>

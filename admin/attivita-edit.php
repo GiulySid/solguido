@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $item["ora"] = trim((string) ($_POST["ora"] ?? ""));
     $item["luogo"] = trim((string) ($_POST["luogo"] ?? ""));
     $item["citta"] = trim((string) ($_POST["citta"] ?? ""));
-    $item["testo"] = trim((string) ($_POST["testo"] ?? ""));
+    $item["testo"] = data_sanitize_html((string) ($_POST["testo"] ?? ""));
     $item["hidden"] = !empty($_POST["hidden"]);
 
     if ($item["titolo"] === "") {
@@ -140,7 +140,7 @@ ob_start();
   </label>
   <label class="admin-field">
     <span>Testo</span>
-    <textarea name="testo"><?= admin_h($item["testo"]) ?></textarea>
+    <textarea name="testo" data-richtext><?= admin_h($item["testo"]) ?></textarea>
   </label>
   <label class="admin-field">
     <span>Immagine</span>
@@ -165,4 +165,4 @@ ob_start();
   </div>
 </form>
 <?php
-admin_layout($index === null ? "Nuova attività" : "Modifica attività", ob_get_clean(), ["nav" => true]);
+admin_layout($index === null ? "Nuova attività" : "Modifica attività", ob_get_clean(), ["nav" => true, "wide" => true]);

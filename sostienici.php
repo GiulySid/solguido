@@ -81,16 +81,19 @@ site_header("sostienici", $titolo, $intro !== "" ? $intro : $titolo);
     <?php if ($iban !== "") { ?>
       <p class="cf-box cf-box--iban"><?= data_h($iban) ?></p>
       <?php if (!empty($site["testoDonazione"])) { ?>
-        <p><?= data_h($site["testoDonazione"]) ?></p>
+        <div class="prose"><?= data_rich($site["testoDonazione"]) ?></div>
       <?php } ?>
     <?php } ?>
     <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Scrivici") ?></a>
   </aside>
   <div class="prose" id="cinque-per-mille">
     <h2>5×1000</h2>
-    <?= data_nl2p($site["testo5x1000"] ?? "") ?>
+    <?= data_rich($site["testo5x1000"] ?? "") ?>
     <?php if ($cf !== "") { ?>
-      <p class="cf-box"><?= data_h($cf) ?></p>
+      <div class="cf-box" role="group" aria-label="Codice fiscale">
+        <span class="cf-box__label">Codice fiscale</span>
+        <span class="cf-box__value"><?= data_h($cf) ?></span>
+      </div>
     <?php } ?>
   </div>
 </section>

@@ -29,7 +29,7 @@ site_header("attivita", (string) ($item["titolo"] ?? "Attività"), site_attivita
     </div>
   <?php } ?>
   <div class="prose">
-    <?= data_nl2p($item["testo"] ?? "") ?>
+    <?= data_rich($item["testo"] ?? "") ?>
   </div>
 </article>
 <?php

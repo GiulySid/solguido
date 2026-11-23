@@ -33,12 +33,11 @@ site_header("home", $name, $site["tagline"] ?? "");
     <h1><?= data_h($site["tagline"]) ?></h1>
   <?php } ?>
   <?php if (!empty($site["heroLead"])) { ?>
-    <p><?= nl2br(data_h($site["heroLead"])) ?></p>
+    <div class="hero__lead"><?= data_rich($site["heroLead"]) ?></div>
   <?php } ?>
   <div class="hero__cta">
-    <a class="btn" href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Contatti") ?></a>
-    <a class="btn-ghost" href="<?= data_h(site_asset("attivita")) ?>"><?= data_h($site["attivitaTitolo"] ?: "Eventi") ?></a>
-    <a class="btn-ghost" href="<?= data_h(site_asset("bacheca")) ?>"><?= data_h($site["bachecaTitolo"] ?: "Ricordi") ?></a>
+    <a class="btn" href="<?= data_h(site_asset("contatti")) ?>"><?= data_h($site["contattiTitolo"] ?: "Scrivici") ?></a>
+    <?= site_social_links("hero") ?>
   </div>
 </section>
 
@@ -47,14 +46,14 @@ $chiSiamoTitolo = trim((string) ($site["chiSiamoTitolo"] ?? "")) ?: "Chi siamo";
 $chiSiamoPreview = trim((string) ($site["chiSiamoAnteprima"] ?? ""));
 if ($chiSiamoPreview !== "") {
 ?>
-  <section class="section panel panel--orchid reveal">
+  <section class="section panel panel--golden reveal">
     <div class="section__head">
       <div>
         <h2><?= data_h($chiSiamoTitolo) ?></h2>
       </div>
     </div>
     <div class="prose">
-      <?= data_nl2p($chiSiamoPreview) ?>
+      <?= data_rich($chiSiamoPreview) ?>
       <p><a class="btn" href="<?= data_h(site_asset("chi-siamo")) ?>">Continua a leggere</a></p>
     </div>
   </section>
@@ -85,6 +84,21 @@ if ($chiSiamoPreview !== "") {
           </div>
         </a>
       <?php } ?>
+    </div>
+  </section>
+<?php } ?>
+
+<?php if (!empty($site["homeCtaTitolo"]) || !empty($site["homeCtaTesto"])) { ?>
+  <section class="section home-cta reveal">
+    <?php if (!empty($site["homeCtaTitolo"])) { ?>
+      <h2><?= data_h($site["homeCtaTitolo"]) ?></h2>
+    <?php } ?>
+    <?php if (!empty($site["homeCtaTesto"])) { ?>
+      <div class="home-cta__text"><?= data_rich($site["homeCtaTesto"]) ?></div>
+    <?php } ?>
+    <div class="hero__cta">
+      <a class="btn" href="<?= data_h(site_asset("sostienici")) ?>"><?= data_h($site["sostieniciTitolo"] ?: "Sostienici") ?></a>
+      <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>#associati">Diventa socio</a>
     </div>
   </section>
 <?php } ?>
@@ -122,21 +136,6 @@ if ($rassegna || $rassegnaVuoto !== "") {
         <?php } ?>
       </ul>
     <?php } ?>
-  </section>
-<?php } ?>
-
-<?php if (!empty($site["homeCtaTitolo"]) || !empty($site["homeCtaTesto"])) { ?>
-  <section class="section home-cta reveal">
-    <?php if (!empty($site["homeCtaTitolo"])) { ?>
-      <h2><?= data_h($site["homeCtaTitolo"]) ?></h2>
-    <?php } ?>
-    <?php if (!empty($site["homeCtaTesto"])) { ?>
-      <p><?= data_h($site["homeCtaTesto"]) ?></p>
-    <?php } ?>
-    <div class="hero__cta">
-      <a class="btn" href="<?= data_h(site_asset("sostienici")) ?>"><?= data_h($site["sostieniciTitolo"] ?: "Sostienici") ?></a>
-      <a class="btn-ghost" href="<?= data_h(site_asset("contatti")) ?>#associati">Diventa socio</a>
-    </div>
   </section>
 <?php } ?>
 <?php

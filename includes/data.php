@@ -106,6 +106,11 @@ function data_default($name) {
             return ["items" => []];
         case "bacheca":
             return ["posts" => []];
+        case "galleria":
+            return [
+                "titolo" => "Galleria",
+                "items" => [],
+            ];
         default:
             return [];
     }
@@ -249,6 +254,23 @@ function data_bacheca_pending_count() {
     return count(data_bacheca_posts(["pending"]));
 }
 
+function data_galleria() {
+    $data = data_read("galleria");
+    $items = is_array($data["items"] ?? null) ? $data["items"] : [];
+    usort($items, static function ($a, $b) {
+        $sortA = (int) ($a["sort"] ?? 0);
+        $sortB = (int) ($b["sort"] ?? 0);
+        if ($sortA !== $sortB) {
+            return $sortA <=> $sortB;
+        }
+        return ((string) ($b["createdAt"] ?? "")) <=> ((string) ($a["createdAt"] ?? ""));
+    });
+    return [
+        "titolo" => trim((string) ($data["titolo"] ?? "")) ?: "Galleria",
+        "items" => array_values($items),
+    ];
+}
+
 function data_strlen($text) {
     $text = (string) $text;
     return function_exists("mb_strlen") ? mb_strlen($text) : strlen($text);
@@ -390,6 +412,208 @@ function data_nl2p($text) {
         $html .= "<p>" . nl2br(data_h($part)) . "</p>";
     }
     return $html;
+}
+
+function data_looks_like_html($text) {
+    return (bool) preg_match("/<\/?[a-z][a-z0-9]*\b[^>]*>/i", (string) $text);
+}
+
+function data_rich_is_empty($html) {
+    $plain = html_entity_decode(strip_tags((string) $html), ENT_QUOTES | ENT_HTML5, "UTF-8");
+    $plain = str_replace("\xC2\xA0", " ", $plain);
+    return trim($plain) === "";
+}
+
+function data_sanitize_style($style) {
+    $safe = [];
+    foreach (explode(";", (string) $style) as $rule) {
+        $rule = trim($rule);
+        if ($rule === "" || strpos($rule, ":") === false) {
+            continue;
+        }
+        [$prop, $value] = array_map("trim", explode(":", $rule, 2));
+        $prop = strtolower($prop);
+        $value = preg_replace("/\s+/", " ", $value) ?? "";
+        if ($prop === "font-size" && preg_match('/^[\d.]+\s*(px|pt|em|rem|%)$/i', $value)) {
+            $safe[] = "font-size: " . $value;
+        }
+    }
+    return implode("; ", $safe);
+}
+
+function data_sanitize_href($href) {
+    $href = trim(html_entity_decode((string) $href, ENT_QUOTES | ENT_HTML5, "UTF-8"));
+    if ($href === "") {
+        return "";
+    }
+    if (preg_match('/^(https?:\/\/|mailto:|\/|#)/i', $href)) {
+        return $href;
+    }
+    return "";
+}
+
+function data_sanitize_node(DOMNode $node, array $allowed) {
+    if ($node->nodeType === XML_TEXT_NODE || $node->nodeType === XML_CDATA_SECTION_NODE) {
+        return;
+    }
+    if ($node->nodeType !== XML_ELEMENT_NODE) {
+        if ($node->parentNode) {
+            $node->parentNode->removeChild($node);
+        }
+        return;
+    }
+
+    /** @var DOMElement $node */
+    $tag = strtolower($node->tagName);
+    if ($tag === "script" || $tag === "style" || $tag === "iframe" || $tag === "object" || $tag === "embed") {
+        if ($node->parentNode) {
+            $node->parentNode->removeChild($node);
+        }
+        return;
+    }
+
+    $children = [];
+    foreach ($node->childNodes as $child) {
+        $children[] = $child;
+    }
+    foreach ($children as $child) {
+        data_sanitize_node($child, $allowed);
+    }
+
+    if (!isset($allowed[$tag])) {
+        $parent = $node->parentNode;
+        if (!$parent) {
+            return;
+        }
+        while ($node->firstChild) {
+            $parent->insertBefore($node->firstChild, $node);
+        }
+        $parent->removeChild($node);
+        return;
+    }
+
+    $keep = $allowed[$tag];
+    $attrs = [];
+    if ($node->hasAttributes()) {
+        foreach ($node->attributes as $attr) {
+            $attrs[] = $attr->name;
+        }
+    }
+    foreach ($attrs as $name) {
+        $nameLower = strtolower($name);
+        if (!in_array($nameLower, $keep, true)) {
+            $node->removeAttribute($name);
+            continue;
+        }
+        if ($nameLower === "href") {
+            $href = data_sanitize_href($node->getAttribute($name));
+            if ($href === "") {
+                $node->removeAttribute($name);
+            } else {
+                $node->setAttribute("href", $href);
+            }
+            continue;
+        }
+        if ($nameLower === "style") {
+            $style = data_sanitize_style($node->getAttribute($name));
+            if ($style === "") {
+                $node->removeAttribute($name);
+            } else {
+                $node->setAttribute("style", $style);
+            }
+            continue;
+        }
+        if ($nameLower === "target") {
+            $target = strtolower(trim($node->getAttribute($name)));
+            if ($target === "_blank") {
+                $node->setAttribute("target", "_blank");
+                $node->setAttribute("rel", "noopener noreferrer");
+            } else {
+                $node->removeAttribute($name);
+            }
+        }
+    }
+
+    if ($tag === "a" && !$node->hasAttribute("href")) {
+        $parent = $node->parentNode;
+        if (!$parent) {
+            return;
+        }
+        while ($node->firstChild) {
+            $parent->insertBefore($node->firstChild, $node);
+        }
+        $parent->removeChild($node);
+    }
+}
+
+function data_sanitize_html($html) {
+    $html = trim((string) $html);
+    if ($html === "" || data_rich_is_empty($html)) {
+        return "";
+    }
+
+    $allowed = [
+        "p" => [],
+        "br" => [],
+        "strong" => [],
+        "b" => [],
+        "em" => [],
+        "i" => [],
+        "u" => [],
+        "ul" => [],
+        "ol" => [],
+        "li" => [],
+        "h2" => [],
+        "h3" => [],
+        "h4" => [],
+        "blockquote" => [],
+        "a" => ["href", "title", "target", "rel"],
+        "span" => ["style"],
+    ];
+
+    if (!class_exists("DOMDocument")) {
+        return data_nl2p(strip_tags($html));
+    }
+
+    $doc = new DOMDocument("1.0", "UTF-8");
+    $prev = libxml_use_internal_errors(true);
+    $payload = '<!DOCTYPE html><html><body><div id="sg-rich-root">' . $html . "</div></body></html>";
+    $doc->loadHTML("<?xml encoding=\"utf-8\">" . $payload);
+    libxml_clear_errors();
+    libxml_use_internal_errors($prev);
+
+    $root = null;
+    foreach ($doc->getElementsByTagName("div") as $div) {
+        if ($div->getAttribute("id") === "sg-rich-root") {
+            $root = $div;
+            break;
+        }
+    }
+    if (!$root) {
+        return "";
+    }
+
+    foreach (iterator_to_array($root->childNodes) as $child) {
+        data_sanitize_node($child, $allowed);
+    }
+
+    $out = "";
+    foreach (iterator_to_array($root->childNodes) as $child) {
+        $out .= $doc->saveHTML($child);
+    }
+    $out = trim($out);
+    return data_rich_is_empty($out) ? "" : $out;
+}
+
+function data_rich($text) {
+    $text = trim((string) $text);
+    if ($text === "") {
+        return "";
+    }
+    if (data_looks_like_html($text)) {
+        return data_sanitize_html($text);
+    }
+    return data_nl2p($text);
 }
 
 function data_ensure_dir($relative) {

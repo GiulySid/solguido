@@ -88,4 +88,68 @@
   } else {
     reveals.forEach((el) => el.classList.add("is-visible"));
   }
+
+  document.querySelectorAll("[data-expandable]").forEach((block) => {
+    const body = block.querySelector("[data-expandable-body]");
+    const btn = block.querySelector("[data-expandable-btn]");
+    if (!(body instanceof HTMLElement) || !(btn instanceof HTMLButtonElement)) return;
+
+    const measure = () => {
+      if (block.classList.contains("is-open")) return;
+      const needsToggle = body.scrollHeight > body.clientHeight + 12;
+      btn.hidden = !needsToggle;
+      if (!needsToggle) {
+        block.classList.add("is-open");
+      }
+    };
+
+    measure();
+    window.addEventListener("resize", measure, { passive: true });
+
+    btn.addEventListener("click", () => {
+      const open = block.classList.toggle("is-open");
+      btn.textContent = open ? "Mostra meno" : "Continua a leggere";
+      if (!open) {
+        measure();
+      }
+    });
+  });
+
+  const lightbox = document.querySelector("[data-gallery-lightbox]");
+  const lightboxImg = document.querySelector("[data-gallery-image]");
+  const lightboxCaption = document.querySelector("[data-gallery-caption]");
+  const closeLightbox = () => {
+    if (!(lightbox instanceof HTMLElement)) return;
+    lightbox.hidden = true;
+    document.body.classList.remove("gallery-open");
+    if (lightboxImg instanceof HTMLImageElement) {
+      lightboxImg.removeAttribute("src");
+      lightboxImg.alt = "";
+    }
+  };
+
+  document.querySelectorAll("[data-gallery-item]").forEach((link) => {
+    if (!(link instanceof HTMLAnchorElement)) return;
+    link.addEventListener("click", (event) => {
+      if (!(lightbox instanceof HTMLElement) || !(lightboxImg instanceof HTMLImageElement)) return;
+      event.preventDefault();
+      lightboxImg.src = link.href;
+      lightboxImg.alt = link.querySelector("img")?.alt || "";
+      const caption = link.getAttribute("data-caption") || "";
+      if (lightboxCaption instanceof HTMLElement) {
+        lightboxCaption.textContent = caption;
+        lightboxCaption.hidden = caption === "";
+      }
+      lightbox.hidden = false;
+      document.body.classList.add("gallery-open");
+    });
+  });
+
+  document.querySelector("[data-gallery-close]")?.addEventListener("click", closeLightbox);
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeLightbox();
+  });
 })();

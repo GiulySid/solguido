@@ -7,6 +7,7 @@ admin_require_login();
 $attivita = data_attivita(true);
 $pending = data_bacheca_pending_count();
 $posts = data_bacheca_posts(null);
+$galleriaCount = count(data_galleria()["items"]);
 
 ob_start();
 ?>
@@ -26,6 +27,13 @@ ob_start();
       <p>Eventi, laboratori, concerti</p>
     </div>
     <span class="admin-count"><?= count($attivita) ?> voci</span>
+  </a>
+  <a class="admin-card" href="galleria.php">
+    <div>
+      <h2>Galleria</h2>
+      <p>Foto nella pagina Chi siamo</p>
+    </div>
+    <span class="admin-count"><?= $galleriaCount ?> foto</span>
   </a>
   <a class="admin-card" href="bacheca.php">
     <div>
